@@ -1,0 +1,21 @@
+slam_toolbox:
+  ros__parameters:
+
+    use_sim_time: false
+    mode: mapping
+
+    publish_map_tf: true        # 🔴 MUSS DA SEIN
+    map_frame: map
+    odom_frame: odom
+    base_frame: base_link
+
+    scan_topic: /scan/filtered
+    laser_frame: base_laser_link
+
+    tf_buffer_duration: 30.0
+    transform_timeout: 1.0
+
+    minimum_travel_distance: 0.01
+    minimum_travel_heading: 0.01
+    throttle_scans: 1
+    scan_queue_size: 200

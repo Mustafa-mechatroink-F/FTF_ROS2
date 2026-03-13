@@ -1,0 +1,6 @@
+image: /home/ftf2/fh_ws/src/ftf_nav2/maps/CIMTT_komplett.pgm
+resolution: 0.05
+origin: [-3.31, -34.5, 0.0]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.25
