@@ -24,6 +24,7 @@ setup(
             'ftf_drive = ftf_control.ftf_sps_drive_node:main',
             'ftf_hub = ftf_control.ftf_hub_node:main',
             'ftf_station = ftf_control.ftf_station_node:main',
+            'hub_test = ftf_control.hub_test:main',
         ],
     },
 )

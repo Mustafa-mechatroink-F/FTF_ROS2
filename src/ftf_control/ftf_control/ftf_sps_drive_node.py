@@ -1,19 +1,20 @@
 #!/usr/bin/env python3
 import math
 import struct
-import rclpy
 import time
+import rclpy
+import pyads
+import tf_transformations
 from rclpy.node import Node
-
 from geometry_msgs.msg import Twist, TransformStamped
 from nav_msgs.msg import Odometry
-import tf_transformations
-import pyads
 from tf2_ros import TransformBroadcaster
 from std_msgs.msg import Float32, Bool
 
+def clamp(x: float, lo: float, hi: float) -> float:
+    return max(lo, min(hi, x))
 # -----------------------------
-# Beckhoff / ADS Konfiguration
+# ADS Konfiguration
 # -----------------------------
 AMS_ID = "192.168.100.1.1.1"
 PLC_IP = "192.168.100.1"
@@ -23,26 +24,19 @@ IG_CORE_IN  = 0xF020
 IO_CORE_IN  = 300
 IG_CORE_OUT = 0xF030
 
-# Offsets für Antrieb (Odometrie)
+# Drive Offsets (Wichtig für Nav2 Odometrie)
 OFFSET_L_IST_VEL = 314 
 OFFSET_R_IST_VEL = 316 
 
-# Offsets für Hub (aus deinem funktionierenden Test-Code)
-OFFSET_HUB_BITS = 302     # Word 1 (für Hoch/Runter Bits)
-OFFSET_HUB_VEL  = 322     # Word 11 (für Geschwindigkeit -100 bis 100)
-
-WHEEL_BASE = 0.5746        
-MAX_SPEED_MM = 2000.0     
+WHEEL_BASE = 0.5746         
+MAX_SPEED_MM = 2000.0    
 DEFAULT_ACCEL = 100       
 
-def clamp(x: float, lo: float, hi: float) -> float:
-    return max(lo, min(hi, x))
-
-class FTFDrive(Node):
+class FTFMaster(Node):
     def __init__(self):
-        super().__init__("ftf_drive")
+        super().__init__("ftf_drive") # Name bleibt ftf_drive für Kompatibilität
 
-        # Parameter
+        # --- PARAMETER (Exakt wie in deiner alten Nav2-Node) ---
         self.declare_parameter("invert_left", False)
         self.declare_parameter("invert_right", False)
         self.declare_parameter("gain_left", 1.0)
@@ -50,58 +44,70 @@ class FTFDrive(Node):
         self.declare_parameter("deadman_timeout_s", 0.5)
         self.declare_parameter("odom_frame", "odom")
         self.declare_parameter("base_frame", "base_footprint")
-        self.declare_parameter("publish_tf", False)
+        self.declare_parameter("publish_tf", False) 
 
-        # ADS Verbindung
+        # ADS Verbindung öffnen
         self.plc = pyads.Connection(AMS_ID, PLC_PORT, PLC_IP)
         self.plc.open()
 
+        # Initialer Sicherheitsmodus
         try:
-            # Setzt den Modus für Fahrfreigabe
             self.plc.write_by_name(".TEST_OHNE_HUB", True, pyads.PLCTYPE_BOOL)
-            self.get_logger().info("SPS: .TEST_OHNE_HUB auf True gesetzt.")
-        except Exception as e:
-            self.get_logger().warn(f"Konnte .TEST_OHNE_HUB nicht setzen: {e}")
+            self.get_logger().info("SPS initialisiert: .TEST_OHNE_HUB = True")
+        except: pass
 
-        # ROS Schnittstellen
-        self.cmd_sub = self.create_subscription(Twist, "/cmd_vel_nav", self.cmd_vel_callback, 10)
+        # --- ROS SCHNITTSTELLEN ---
+        # Antrieb: Benutze relativen Namen 'cmd_vel', damit dein Remapping '-r cmd_vel:=cmd_vel_nav' funktioniert
+        self.cmd_sub = self.create_subscription(Twist, "cmd_vel", self.cmd_vel_callback, 10)
         self.odom_pub = self.create_publisher(Odometry, "/odom_raw", 10)
         self.tf_broadcaster = TransformBroadcaster(self)
 
-        self.create_subscription(Float32, "/ftf/hub/goal_position", self.hub_goal_callback, 10)
+        # Hub (Die funktionierende neue Logik)
+        self.hub_sub = self.create_subscription(Float32, "/ftf/hub/goal_position", self.hub_goal_callback, 10)
         self.pub_height = self.create_publisher(Float32, "/ftf/hub/height", 10)
         self.pub_ready = self.create_publisher(Bool, "/ftf/hub/ready", 10)
 
-        # State
+        # --- STATE ---
         self.last_cmd_time = self.get_clock().now()
         self.target_l_mm = 0.0
         self.target_r_mm = 0.0
         self.heartbeat = 0
         
-        # Hub State
-        self.target_height = 0.0
-        self.current_height = 0.0
-        self.hub_active = False
-
+        # Odometrie State (Exakt deine Berechnung)
         self.x = 0.0
         self.y = 0.0
         self.theta = 0.0
         self.last_odom_time = self.get_clock().now()
+        
+        self.current_height = 0.0
+        self.hub_moving = False
 
-        # Timer
-        self.create_timer(0.02, self.control_loop)     # 50Hz
-        self.create_timer(0.05, self.update_odometry)  # 20Hz
+        # --- TIMER ---
+        self.create_timer(0.02, self.control_loop)     # 50Hz: SPS Schreiben
+        self.create_timer(0.05, self.update_odometry)  # 20Hz: Nav2 Odom & TF
+        self.get_logger().info("🚀 FTF Master Node bereit für Nav2 & Hub.")
 
-        self.get_logger().info("FTFDrive gestartet (Offset-Steuerung für Hub aktiv)")
-
+    # --- HUB LOGIK (VON CODE 1) ---
     def hub_goal_callback(self, msg: Float32):
-        self.target_height = float(msg.data)
-        self.get_logger().info(f"📨 Hub Ziel erhalten: {self.target_height:.1f} mm")
-        # Deaktiviere Testmodus während der Fahrt, damit SPS Hub beachtet
+        target = float(msg.data)
+        self.get_logger().info(f"📨 Hub-Zielanforderung: {target:.1f} mm")
         try:
+            # Hub-Aktivierung
             self.plc.write_by_name(".TEST_OHNE_HUB", False, pyads.PLCTYPE_BOOL)
-        except: pass
+            self.plc.write_by_name("HUBTEST_2_MOTOREN.E_ANWAHL_HUB", True, pyads.PLCTYPE_BOOL)
+            self.plc.write_by_name("HUBTEST_2_MOTOREN.E_ANWAHL_HUB2", True, pyads.PLCTYPE_BOOL)
+            self.plc.write_by_name("HUBTEST_2_MOTOREN.E_VELOCITY", 20.0, pyads.PLCTYPE_LREAL)
+            self.plc.write_by_name("HUBTEST_2_MOTOREN.E_ZIELPOS", target, pyads.PLCTYPE_LREAL)
+            
+            # Start-Impuls
+            self.plc.write_by_name("HUBTEST_2_MOTOREN.E_ZIELFAHRT", True, pyads.PLCTYPE_BOOL)
+            time.sleep(0.1)
+            self.plc.write_by_name("HUBTEST_2_MOTOREN.E_ZIELFAHRT", False, pyads.PLCTYPE_BOOL)
+            self.hub_moving = True
+        except Exception as e:
+            self.get_logger().error(f"Hub-Fehler: {e}")
 
+    # --- ANTRIEB LOGIK (VON CODE 2) ---
     def cmd_vel_callback(self, msg: Twist):
         self.last_cmd_time = self.get_clock().now()
         v = float(msg.linear.x)
@@ -115,60 +121,31 @@ class FTFDrive(Node):
         self.target_l_mm = l_mm
         self.target_r_mm = r_mm
 
-    def _pack_and_write(self, enable: bool, left_mm_s: float, right_mm_s: float):
-        words = [0] * 21
-        self.heartbeat ^= 1
-        words[0] = int(1 if self.heartbeat else 0) # Heartbeat
-        words[1] = int(1 if enable else 0)         # Enable
-        words[4] = int(clamp(left_mm_s, -MAX_SPEED_MM, MAX_SPEED_MM))
-        words[5] = int(clamp(right_mm_s, -MAX_SPEED_MM, MAX_SPEED_MM))
-        words[6] = int(DEFAULT_ACCEL)
-        words[7] = int(DEFAULT_ACCEL)
-        buf = struct.pack("<21h", *words)
-        self.plc.write(IG_CORE_IN, IO_CORE_IN, buf, pyads.PLCTYPE_BYTE * 42)
-
     def control_loop(self):
         try:
-            # 1. Aktuelle Höhe lesen (falls Variablennamen gehen)
-            try:
-                pos_l = self.plc.read_by_name("HUBTEST_2_MOTOREN.A_ISTPOSITION_L", pyads.PLCTYPE_REAL)
-                pos_r = self.plc.read_by_name("HUBTEST_2_MOTOREN.A_ISTPOSITION_R", pyads.PLCTYPE_REAL)
-                self.current_height = (float(pos_l) + float(pos_r)) / 2.0
-            except:
-                pass
-
-            # 2. Hub-Logik: Ziel anfahren über Geschwindigkeits-Offset (322)
-            diff = self.target_height - self.current_height
-            hub_vel = 0
-            
-            if abs(diff) > 2.0:  # 2mm Toleranz
-                hub_vel = 100 if diff > 0 else -100
-                self.hub_active = True
-            else:
-                hub_vel = 0
-                if self.hub_active: # Nur einmal triggern wenn Ziel erreicht
-                    self.hub_active = False
-                    try:
-                        self.plc.write_by_name(".TEST_OHNE_HUB", True, pyads.PLCTYPE_BOOL)
-                    except: pass
-
-            # Schreibe Geschwindigkeit direkt auf Offset (wie im Test-Skript)
-            self.plc.write(IG_CORE_IN, OFFSET_HUB_VEL, hub_vel, pyads.PLCTYPE_INT)
-
-            # 3. Fahr-Logik & Sicherheit
             dt_deadman = (self.get_clock().now() - self.last_cmd_time).nanoseconds / 1e9
+            enable = dt_deadman < float(self.get_parameter("deadman_timeout_s").value)
+
+            words = [0] * 21
+            self.heartbeat ^= 1
+            words[0] = int(1 if self.heartbeat else 0)
+            words[1] = int(1 if enable else 0)
             
-            if dt_deadman > float(self.get_parameter("deadman_timeout_s").value):
-                self._pack_and_write(False, 0.0, 0.0)
-            elif self.hub_active:
-                # Fahrstopp während Hubbewegung
-                self._pack_and_write(True, 0.0, 0.0)
-            else:
-                self._pack_and_write(True, self.target_l_mm, self.target_r_mm)
+            # Fahrstopp zur Sicherheit während Hubbewegung
+            l_out = self.target_l_mm if (enable and not self.hub_moving) else 0.0
+            r_out = self.target_r_mm if (enable and not self.hub_moving) else 0.0
+            
+            words[4] = int(clamp(l_out, -MAX_SPEED_MM, MAX_SPEED_MM))
+            words[5] = int(clamp(r_out, -MAX_SPEED_MM, MAX_SPEED_MM))
+            words[6] = int(DEFAULT_ACCEL)
+            words[7] = int(DEFAULT_ACCEL)
 
+            buf = struct.pack("<21h", *words)
+            self.plc.write(IG_CORE_IN, IO_CORE_IN, buf, pyads.PLCTYPE_BYTE * 42)
         except Exception as e:
-            self.get_logger().error(f"Fehler im control_loop: {e}")
+            self.get_logger().error(f"SPS Schreibfehler: {e}")
 
+    # --- ODOMETRIE & TF (DAS HERZSTÜCK FÜR NAV2) ---
     def update_odometry(self):
         now = self.get_clock().now()
         dt = (now - self.last_odom_time).nanoseconds / 1e9
@@ -176,27 +153,51 @@ class FTFDrive(Node):
         self.last_odom_time = now
 
         try:
+            # 1. Hub-Status lesen
+            pos_l_h = self.plc.read_by_name("HUBTEST_2_MOTOREN.A_ISTPOSITION_L", pyads.PLCTYPE_REAL)
+            pos_r_h = self.plc.read_by_name("HUBTEST_2_MOTOREN.A_ISTPOSITION_R", pyads.PLCTYPE_REAL)
+            sync = self.plc.read_by_name("HUBTEST_2_MOTOREN.A_SERVOS_SYNCHRON", pyads.PLCTYPE_BOOL)
+            self.current_height = (float(pos_l_h) + float(pos_r_h)) / 2.0
+            
+            if sync and self.hub_moving:
+                self.hub_moving = False
+                try: self.plc.write_by_name(".TEST_OHNE_HUB", True, pyads.PLCTYPE_BOOL)
+                except: pass
+
+            # 2. Antrieb-Daten lesen (Deine Odometrie)
             v_l_raw = self.plc.read(IG_CORE_OUT, OFFSET_L_IST_VEL, pyads.PLCTYPE_INT)
             v_r_raw = self.plc.read(IG_CORE_OUT, OFFSET_R_IST_VEL, pyads.PLCTYPE_INT)
             if bool(self.get_parameter("invert_left").value): v_l_raw = -v_l_raw
             if bool(self.get_parameter("invert_right").value): v_r_raw = -v_r_raw
             
-            gain_l = float(self.get_parameter("gain_left").value)
-            gain_r = float(self.get_parameter("gain_right").value)
-            v_l_mm = float(v_l_raw) * gain_l
-            v_r_mm = float(v_r_raw) * gain_r
+            v_l_mm = float(v_l_raw) * float(self.get_parameter("gain_left").value)
+            v_r_mm = float(v_r_raw) * float(self.get_parameter("gain_right").value)
             
             v = ((v_l_mm + v_r_mm) / 2.0) / 1000.0
             w = ((v_r_mm - v_l_mm) / WHEEL_BASE) / 1000.0
+            
             dtheta = w * dt
             self.x += v * dt * math.cos(self.theta + dtheta / 2.0)
             self.y += v * dt * math.sin(self.theta + dtheta / 2.0)
             self.theta += dtheta
 
-            q = tf_transformations.quaternion_from_euler(0.0, 0.0, self.theta)
+            # TF publizieren (Pflicht für Nav2)
             odom_frame = str(self.get_parameter("odom_frame").value)
             base_frame = str(self.get_parameter("base_frame").value)
+            q = tf_transformations.quaternion_from_euler(0.0, 0.0, self.theta)
 
+            if bool(self.get_parameter("publish_tf").value):
+                t = TransformStamped()
+                t.header.stamp = now.to_msg()
+                t.header.frame_id = odom_frame
+                t.child_frame_id = base_frame
+                t.transform.translation.x = self.x
+                t.transform.translation.y = self.y
+                t.transform.rotation.z = q[2]
+                t.transform.rotation.w = q[3]
+                self.tf_broadcaster.sendTransform(t)
+
+            # Odometrie Nachricht
             odom = Odometry()
             odom.header.stamp = now.to_msg()
             odom.header.frame_id = odom_frame
@@ -209,29 +210,26 @@ class FTFDrive(Node):
             odom.twist.twist.angular.z = w
             self.odom_pub.publish(odom)
 
-            # Publish Hub-Höhe für ROS
-            h_msg = Float32()
-            h_msg.data = self.current_height
-            self.pub_height.publish(h_msg)
+            self.pub_height.publish(Float32(data=self.current_height))
+            self.pub_ready.publish(Bool(data=sync))
 
         except Exception as e:
-            self.get_logger().error(f"Odometrie Fehler: {e}")
+            self.get_logger().error(f"Odom-Fehler: {e}")
 
-    def shutdown_safe(self):
+    def shutdown(self):
         try:
-            self.plc.write(IG_CORE_IN, OFFSET_HUB_VEL, 0, pyads.PLCTYPE_INT)
-            self._pack_and_write(False, 0.0, 0.0)
+            self.plc.write(IG_CORE_IN, IO_CORE_IN, struct.pack("<21h", *([0]*21)), pyads.PLCTYPE_BYTE * 42)
             self.plc.close()
         except: pass
 
 def main(args=None):
     rclpy.init(args=args)
-    node = FTFDrive()
+    node = FTFMaster()
     try:
         rclpy.spin(node)
     except KeyboardInterrupt: pass
     finally:
-        node.shutdown_safe()
+        node.shutdown()
         rclpy.shutdown()
 
 if __name__ == "__main__":

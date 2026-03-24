@@ -1,61 +1,108 @@
 #!/usr/bin/env python3
-import pyads
-import time
+import math
 import struct
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist
+from nav_msgs.msg import Odometry
+import pyads
+from std_msgs.msg import Float32, Bool
 
-# Verbindungsparameter
-PLC_AMS_ID = "192.168.100.1.1.1"
-PLC_IP = "192.168.100.1"
+class FTFDrive(Node):
+    def __init__(self):
+        super().__init__("ftf_drive")
 
-def run_hub_test():
-    # 1. Verbindung aufbauen
-    plc = pyads.Connection(PLC_AMS_ID, 801, PLC_IP)
-    try:
-        plc.open()
-        print("✅ ADS Verbindung offen.")
+        # ADS Verbindung
+        self.plc = pyads.Connection("192.168.100.1.1.1", 801, "192.168.100.1")
+        self.plc.open()
 
-        # 2. Den "Sperrmodus" vom Drive-Node explizit ausschalten
-        print("🔓 Deaktiviere .TEST_OHNE_HUB...")
-        plc.write_by_name(".TEST_OHNE_HUB", False, pyads.PLCTYPE_BOOL)
+        # ROS
+        self.create_subscription(Twist, "/cmd_vel_nav", self.cmd_vel_callback, 10)
+        self.create_subscription(Float32, "/ftf/hub/goal_position", self.hub_goal_callback, 10)
+        self.pub_height = self.create_publisher(Float32, "/ftf/hub/height", 10)
 
-        # 3. Heartbeat & Predominance Loop (für 5 Sekunden)
-        # Wir müssen der SPS zeigen, dass wir "leben"
-        target_height = 600 # Ziel in mm
-        print(f"🚀 Starte Test-Zyklus: Ziel {target_height}mm")
+        # State
+        self.heartbeat = False
+        self.target_height = None
+        self.current_height = 0.0
+        self.target_l = 0.0
+        self.target_r = 0.0
+        self.last_cmd = self.get_clock().now()
 
-        for i in range(50): # 5 Sekunden lang (100ms Takt)
-            # --- WORD 0 (Offset 300) schreiben ---
-            # Bit 0: Heartbeat (toggelt), Bit 1: AIC_Predominance (AN)
-            hb_bit = i % 2
-            control_word = hb_bit | (1 << 1)
-            plc.write(0xF020, 300, control_word, pyads.PLCTYPE_WORD)
+        self.create_timer(0.02, self.control_loop)
 
-            # --- ZIEL & KOMMANDO schreiben ---
-            if i == 5: # Nach 0.5 Sekunde den Fahrbefehl schicken
-                print(f"  -> Sende Ziel {target_height} an Offset 326")
-                plc.write(0xF020, 326, target_height, pyads.PLCTYPE_INT)
-                print("  -> Sende Start-Kommando (3) an Offset 328")
-                plc.write(0xF020, 328, 3, pyads.PLCTYPE_WORD)
+    def hub_goal_callback(self, msg):
+        self.target_height = msg.data
 
-            # --- STATUS LESEN ---
-            try:
-                ist_pos = plc.read(0xF030, 326, pyads.PLCTYPE_INT)
-                status_word = plc.read(0xF030, 328, pyads.PLCTYPE_WORD)
-                ready = bool(status_word & (1 << 0))
-                moving = bool(status_word & (1 << 1))
-                print(f"  [{i}] Ist: {ist_pos}mm | Ready: {ready} | Moving: {moving}", end="\r")
-            except:
-                pass
+    def cmd_vel_callback(self, msg):
+        self.last_cmd = self.get_clock().now()
+        # Einfache Differential-Drive Berechnung
+        self.target_l = (msg.linear.x - msg.angular.z * 0.5746 / 2.0) * 1000.0
+        self.target_r = (msg.linear.x + msg.angular.z * 0.5746 / 2.0) * 1000.0
 
-            time.sleep(0.1)
+    def control_loop(self):
+        # 1. Ist-Höhe lesen (Offset 326 laut deiner Doku)
+        try:
+            self.current_height = float(self.plc.read(0xF030, 326, pyads.PLCTYPE_INT))
+            if self.target_height is None: self.target_height = self.current_height
+        except: pass
 
-        # 4. Stop & Abschluss
-        print("\n🛑 Test beendet. Sende Stop.")
-        plc.write(0xF020, 328, 0, pyads.PLCTYPE_WORD)
-        plc.close()
+        # 2. Logik: Heben oder Senken?
+        diff = self.target_height - self.current_height
+        jog_up = diff > 2.0
+        jog_down = diff < -2.0
+        
+        # 3. DAS PACKET BAUEN (Exakt wie STRUCT_CORE_Inputs)
+        # Wir bauen einen Buffer von 46 Bytes (entspricht der Struktur)
+        buffer = bytearray(46)
+        
+        # Word 0: Heartbeat + Status Bools (Byte 0 & 1)
+        self.heartbeat = not self.heartbeat
+        if self.heartbeat: buffer[0] |= (1 << 0) # Bit 0: Heartbeat
+        # Shutdown_System (Bit 1) lassen wir auf 0
+        
+        # Word 1: Thresholds (Byte 12 & 13)
+        buffer[12] = 124 # Warning
+        buffer[13] = 100 # Alarm
+        
+        # Word 2-5: Motoren (Byte 14-21)
+        struct.pack_into("<hhHH", buffer, 14, 
+                         int(self.target_l), 
+                         int(self.target_r), 
+                         100, 100) # Accel, Decel
+        
+        # Word 7: Watchdog (Byte 24)
+        buffer[24] = 100 # 1 Sekunde
+        
+        # Word 7/8: Jog Bools (Byte 25-28)
+        if jog_up:   buffer[25] = 1 # Jog_Hub_heben
+        if jog_down: buffer[26] = 1 # Jog_Hub_senken
+        
+        # Word 14: DER ENTSCHEIDENDE TRIGGER (Offset 28)
+        # Laut deinem Kommentar: "Wenn WORD 14 = 1 Jog-Betrieb"
+        if jog_up or jog_down:
+            struct.pack_into("<h", buffer, 28, 1) 
 
-    except Exception as e:
-        print(f"❌ Fehler: {e}")
+        # Word 15 & 16: Hub Geschwindigkeiten (Byte 30-33)
+        if jog_up or jog_down:
+            struct.pack_into("<hh", buffer, 30, 20, 20) # 20mm/s
+
+        # 4. Senden an die SPS
+        try:
+            self.plc.write(0xF020, 300, bytes(buffer), pyads.PLCTYPE_BYTE * 46)
+        except Exception as e:
+            self.get_logger().error(f"ADS Fehler: {e}")
+
+        # Status an ROS
+        h_msg = Float32()
+        h_msg.data = self.current_height
+        self.pub_height.publish(h_msg)
+
+def main():
+    rclpy.init()
+    node = FTFDrive()
+    rclpy.spin(node)
+    rclpy.shutdown()
 
 if __name__ == "__main__":
-    run_hub_test()
+    main()
