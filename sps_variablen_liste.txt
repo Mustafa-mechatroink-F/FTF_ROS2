@@ -1,0 +1,807 @@
+=== BECKHOFF SPS VARIABLEN ===
+
+Name: .AIC                                                         | Typ: STRUCT_AIC
+Name: .AIC_IN_DATA                                                 | Typ: ARRAY [0..30] OF WORD
+Name: .AIC_OUT_DATA                                                | Typ: ARRAY [0..30] OF WORD
+Name: .ARGTYPE_IS_BIT_TYPE                                         | Typ: ARRAY [0..18] OF BOOL
+Name: .ARGTYPE_IS_FLOAT_TYPE                                       | Typ: ARRAY [0..18] OF BOOL
+Name: .ARGTYPE_IS_SIGNED_TYPE                                      | Typ: ARRAY [0..18] OF BOOL
+Name: .ARGTYPE_IS_STRING_TYPE                                      | Typ: ARRAY [0..18] OF BOOL
+Name: .ARGTYPE_IS_UNSIGNED_TYPE                                    | Typ: ARRAY [0..18] OF BOOL
+Name: .A_AMPEL_GELB                                                | Typ: BOOL
+Name: .A_AMPEL_GRUEN                                               | Typ: BOOL
+Name: .A_AMPEL_ROT                                                 | Typ: BOOL
+Name: .A_CORE_AUS                                                  | Typ: BOOL
+Name: .A_KUNDEN_DO1                                                | Typ: BOOL
+Name: .A_KUNDEN_DO2                                                | Typ: BOOL
+Name: .A_LADESCHUETZ_EIN                                           | Typ: BOOL
+Name: .A_LM_BATTERY_LOW_GELB                                       | Typ: BOOL
+Name: .A_LM_BEREIT_GRUEN                                           | Typ: BOOL
+Name: .A_LM_FAHRRICHTUNGSANZEIGE_LINKS                             | Typ: BOOL
+Name: .A_LM_FAHRRICHTUNGSANZEIGE_RECHTS                            | Typ: BOOL
+Name: .A_LM_MANUELL_LADEN                                          | Typ: BOOL
+Name: .A_LM_NOTAUS_ODER_FEHLER_ROT                                 | Typ: BOOL
+Name: .A_RESERVE_0_6                                               | Typ: BOOL
+Name: .A_RESERVE_2_4                                               | Typ: BOOL
+Name: .A_RESERVE_2_5                                               | Typ: BOOL
+Name: .A_RESERVE_2_6                                               | Typ: BOOL
+Name: .A_RESERVE_2_7                                               | Typ: BOOL
+Name: .A_RGB_BLUE                                                  | Typ: BOOL
+Name: .A_RGB_GREEN                                                 | Typ: BOOL
+Name: .A_RGB_RED                                                   | Typ: BOOL
+Name: .A_ROLLER_DRIVE_EC310_GESCHWINDIGKEITSVORGABE                | Typ: WORD
+Name: .A_ROLLER_DRIVE_EC310_ROTATIONSRICHTUNG                      | Typ: BOOL
+Name: .A_SAFETY_RESET_SIGNAL                                       | Typ: BOOL
+Name: .A_SAFETY_SCANNER_TIM_H_IN1                                  | Typ: BOOL
+Name: .A_SAFETY_SCANNER_TIM_H_IN2                                  | Typ: BOOL
+Name: .A_SAFETY_SCANNER_TIM_H_IN3                                  | Typ: BOOL
+Name: .A_SAFETY_SCANNER_TIM_H_IN4                                  | Typ: BOOL
+Name: .A_SAFETY_SCANNER_TIM_L_IN1                                  | Typ: BOOL
+Name: .A_SAFETY_SCANNER_TIM_L_IN2                                  | Typ: BOOL
+Name: .A_SAFETY_SCANNER_TIM_L_IN3                                  | Typ: BOOL
+Name: .A_SAFETY_SCANNER_TIM_L_IN4                                  | Typ: BOOL
+Name: .A_SAFETY_SCANNER_TIM_R_IN1                                  | Typ: BOOL
+Name: .A_SAFETY_SCANNER_TIM_R_IN2                                  | Typ: BOOL
+Name: .A_SAFETY_SCANNER_TIM_R_IN3                                  | Typ: BOOL
+Name: .A_SAFETY_SCANNER_TIM_R_IN4                                  | Typ: BOOL
+Name: .A_STCOUNTERPM1                                              | Typ: ST_COUNTER_OUTPUT
+Name: .A_STCOUNTERPM2                                              | Typ: ST_COUNTER_OUTPUT
+Name: .A_SYSTEM_AUS                                                | Typ: BOOL
+Name: .BBLOCKDRIVESFWUPDATE                                        | Typ: BOOL
+Name: .BBLOCKECATSCAN                                              | Typ: BOOL
+Name: .BBOOL7001                                                   | Typ: BOOL
+Name: .BMS                                                         | Typ: STRUCT_BMS
+Name: .BMS_ALARM_THRESHOLD_MV                                      | Typ: WORD
+Name: .BMS_CMD_BATT_BALANCE                                        | Typ: STRING(3)
+Name: .BMS_CMD_BATT_BALANCING                                      | Typ: STRING(3)
+Name: .BMS_CMD_BATT_CHARGE                                         | Typ: STRING(3)
+Name: .BMS_CMD_BATT_SET_SOC                                        | Typ: STRING(3)
+Name: .BMS_CMD_BATT_TEMP                                           | Typ: STRING(3)
+Name: .BMS_CMD_BATT_TEMP_DETAIL                                    | Typ: STRING(3)
+Name: .BMS_CMD_BATT_VOLTAGE                                        | Typ: STRING(3)
+Name: .BMS_CMD_BATT_VOLTAGE_DETAIL                                 | Typ: STRING(3)
+Name: .BMS_CMD_CURRENT                                             | Typ: STRING(3)
+Name: .BMS_CMD_CURRENT_OFFSET                                      | Typ: STRING(3)
+Name: .BMS_CMD_INPUTS                                              | Typ: STRING(3)
+Name: .BMS_CMD_OUTPUTS                                             | Typ: STRING(3)
+Name: .BMS_CMD_REQUEST                                             | Typ: STRING(3)
+Name: .BMS_CMD_RESET                                               | Typ: STRING(3)
+Name: .BMS_CMD_RESTORE_FACTORY                                     | Typ: STRING(3)
+Name: .BMS_CMD_SET_BATT_TEMP                                       | Typ: STRING(3)
+Name: .BMS_CMD_STATUS                                              | Typ: STRING(3)
+Name: .BMS_CMD_TIMEDATE                                            | Typ: STRING(3)
+Name: .BMS_CMD_VERSION                                             | Typ: STRING(3)
+Name: .BMS_DATA_SEND                                               | Typ: BOOL
+Name: .BMS_IN_DATA                                                 | Typ: EL6INDATA22B
+Name: .BMS_MSG_DELIMITER                                           | Typ: STRING(1)
+Name: .BMS_MSG_END                                                 | Typ: STRING(2)
+Name: .BMS_OUT_DATA                                                | Typ: EL6OUTDATA22B
+Name: .BMS_WARNING_THRESHOLD_MV                                    | Typ: WORD
+Name: .BRETAIN7001                                                 | Typ: BOOL
+Name: .BSEQREADDRVATTRANDVALUE                                     | Typ: BOOL
+Name: .CORE                                                        | Typ: STRUCT_CORE
+Name: .CORE_IN_DATA                                                | Typ: ARRAY [0..20] OF WORD
+Name: .CORE_OUT_DATA                                               | Typ: ARRAY [0..20] OF WORD
+Name: .COUNTER_ENCODER_LINKS                                       | Typ: ST_COUNTER_DATA
+Name: .COUNTER_ENCODER_RECHTS                                      | Typ: ST_COUNTER_DATA
+Name: .CURRENTCALLER                                               | Typ: STRING(40)
+Name: .CURRENTCLIENTID                                             | Typ: DWORD
+Name: .CURRENTLANGUAGE                                             | Typ: STRING(40)
+Name: .CURRENTPASSWORD                                             | Typ: STRING(40)
+Name: .CURRENTPASSWORDS                                            | Typ: ARRAY [0..7] OF STRING(20)
+Name: .CURRENTUSERID                                               | Typ: INT16
+Name: .CURRENTUSERLEVEL                                            | Typ: INT16
+Name: .CURRENTUSERNAME                                             | Typ: STRING(40)
+Name: .CURRENTVISU                                                 | Typ: STRING(40)
+Name: .CURRENTWRITEACCESSCLIENTID                                  | Typ: DWORD
+Name: .C_TEXT_MC_FEHLER                                            | Typ: STRING(100)
+Name: .DBGCONTEXT_NAMES                                            | Typ: ARRAY [0..2] OF STRING(10)
+Name: .DEFAULT_CSV_FIELD_SEP                                       | Typ: BYTE
+Name: .DEFAULT_DBGOUTPUT_FILE                                      | Typ: STRING(80)
+Name: .DISABLE_CORE_SHUTDOWN                                       | Typ: BOOL
+Name: .DISABLE_GLOBAL_SHUTDOWN                                     | Typ: BOOL
+Name: .EC_DCTIME_DELTA_OFFSET                                      | Typ: T_ULARGE_INTEGER
+Name: .EC_DCTIME_TICKSPERDAY                                       | Typ: T_ULARGE_INTEGER
+Name: .EC_DCTIME_TICKSPERMSEC                                      | Typ: T_ULARGE_INTEGER
+Name: .EC_DCTIME_TICKSPERSEC                                       | Typ: T_ULARGE_INTEGER
+Name: .EMPTY_ARG_VALUE                                             | Typ: T_ARG
+Name: .EMPTY_ROUTE_ENTRY                                           | Typ: ST_AMSROUTEENTRY
+Name: .E_KUNDEN_DI1                                                | Typ: BOOL
+Name: .E_LADESCHALENSENSOR                                         | Typ: BOOL
+Name: .E_LAM_SENSOR_1                                              | Typ: BOOL
+Name: .E_LAM_SENSOR_2                                              | Typ: BOOL
+Name: .E_LAM_SENSOR_3                                              | Typ: BOOL
+Name: .E_RASPY_DO1                                                 | Typ: BOOL
+Name: .E_RASPY_DO2                                                 | Typ: BOOL
+Name: .E_RESERVE_2_1                                               | Typ: BOOL
+Name: .E_RESERVE_2_2                                               | Typ: BOOL
+Name: .E_RESERVE_2_3                                               | Typ: BOOL
+Name: .E_RESERVE_2_4                                               | Typ: BOOL
+Name: .E_RESERVE_2_5                                               | Typ: BOOL
+Name: .E_RESERVE_2_6                                               | Typ: BOOL
+Name: .E_RESERVE_2_7                                               | Typ: BOOL
+Name: .E_ROLLER_DRIVE_EC310_FEHLERAUSWERTUNG                       | Typ: BOOL
+Name: .E_SAFETY_SCANNER_ERROR                                      | Typ: BOOL
+Name: .E_SAFETY_SCANNER_RESET_ANFORDERUNG                          | Typ: BOOL
+Name: .E_SAFETY_SCANNER_TIM_H_OUT_1_FELD1_SICHER                   | Typ: BOOL
+Name: .E_SAFETY_SCANNER_TIM_H_OUT_4_BEREIT                         | Typ: BOOL
+Name: .E_SAFETY_SCANNER_TIM_L_OUT_1_FELD1_SICHER                   | Typ: BOOL
+Name: .E_SAFETY_SCANNER_TIM_L_OUT_2_FELD2_SICHER                   | Typ: BOOL
+Name: .E_SAFETY_SCANNER_TIM_L_OUT_3_FELD3_SICHER                   | Typ: BOOL
+Name: .E_SAFETY_SCANNER_TIM_L_OUT_4_FELD4_SICHER                   | Typ: BOOL
+Name: .E_SAFETY_SCANNER_TIM_R_OUT_1_FELD1_SICHER                   | Typ: BOOL
+Name: .E_SAFETY_SCANNER_TIM_R_OUT_2_FELD2_SICHER                   | Typ: BOOL
+Name: .E_SAFETY_SCANNER_TIM_R_OUT_3_FELD3_SICHER                   | Typ: BOOL
+Name: .E_SAFETY_SCANNER_TIM_R_OUT_4_FELD4_SICHER                   | Typ: BOOL
+Name: .E_SAFETY_SCANNER_WARNUNG                                    | Typ: BOOL
+Name: .E_STCOUNTERPM1                                              | Typ: ST_COUNTER_INPUT
+Name: .E_STCOUNTERPM2                                              | Typ: ST_COUNTER_INPUT
+Name: .E_TASTER_SYSTEM_AUS                                         | Typ: BOOL
+Name: .E_TASTER_SYSTEM_BREMSE_LOESEN                               | Typ: BOOL
+Name: .E_TASTER_SYSTEM_EIN                                         | Typ: BOOL
+Name: .E_TASTER_SYSTEM_MANUELLE_LADEN                              | Typ: BOOL
+Name: .FORMAT_DECASC_CODES                                         | Typ: ARRAY [0..9] OF BYTE
+Name: .FORMAT_DEFAULT_PRECISION                                    | Typ: ARRAY [0..11] OF INT
+Name: .FORMAT_HASH_PREFIX_STRING                                   | Typ: ARRAY [0..1, 0..11] OF STRING(10)
+Name: .FORMAT_HEXASC_CODES                                         | Typ: ARRAY [0..1, 0..15] OF BYTE
+Name: .FORMAT_PREFIX_SUPPORT_MASK                                  | Typ: ARRAY [0..3, 0..11] OF BOOL
+Name: .FORMAT_TYPE_SUPPORT_MASK                                    | Typ: ARRAY [0..11, 0..18] OF BOOL
+Name: .FTS_KILOMETERSTAND                                          | Typ: LREAL
+Name: .GLOBAL_CRC_CCITT_TABLE                                      | Typ: ARRAY [0..255] OF WORD
+Name: .GLOBAL_DBGOUTPUTCTRL                                        | Typ: FB_DBGOUTPUTCTRL
+Name: .GLOBAL_DBGOUTPUTVISU                                        | Typ: ARRAY [1..30] OF STRING(255)
+Name: .GLOBAL_DCF77_PULSE_SPLIT                                    | Typ: TIME
+Name: .GLOBAL_DCF77_SEQUENCE_CHECK                                 | Typ: BOOL
+Name: .GLOBAL_FORMAT_HASH_PREFIX_TYPE                              | Typ: E_HASHPREFIXTYPES
+Name: .GLOBAL_SBCS_TABLE                                           | Typ: E_SBCSTYPE
+Name: .GP_AXIS_DIGITAL_EINGAENGE                                   | Typ: ARRAY [0..5] OF WORD
+Name: .GP_AXIS_REF                                                 | Typ: ARRAY [0..5] OF _FBAXIS_REF
+Name: .GSV_CONVEYOR                                                | Typ: ARRAY [0..3] OF ST_CONVEYOR
+Name: .GSV_SERVOS                                                  | Typ: ARRAY [0..5] OF ST_SERVOS
+Name: .GSV_TASTER                                                  | Typ: ARRAY [0..5] OF ST_TASTER
+Name: .GSV_TIME_DATE                                               | Typ: ST_TIME_DATE
+Name: .G_CALLGENERIC_STATE                                         | Typ: BYTE
+Name: .G_FWVERSION                                                 | Typ: ARRAY [0..3] OF UINT
+Name: .G_FWVERSION_INIT                                            | Typ: BOOL
+Name: .HISTOGRAM_VALUE1                                            | Typ: ARRAY [0..300] OF INT
+Name: .HISTOGRAM_VALUE2                                            | Typ: ARRAY [0..300] OF INT
+Name: .IARRDRIVESUPDATEPORTS                                       | Typ: ARRAY [0..255] OF UINT
+Name: .IBLOCKECATSCANCOUNT                                         | Typ: DINT
+Name: .IMQN_TABLE                                                  | Typ: ARRAY [0..31] OF LREAL
+Name: .INDEX7001                                                   | Typ: DINT
+Name: .INDEX7002                                                   | Typ: DINT
+Name: .INDEX7003                                                   | Typ: DINT
+Name: .INDEX7004                                                   | Typ: DINT
+Name: .INDEX7005                                                   | Typ: DINT
+Name: .INDEX7006                                                   | Typ: DINT
+Name: .INDEX7007                                                   | Typ: DINT
+Name: .INDEX7008                                                   | Typ: DINT
+Name: .INDEX7009                                                   | Typ: DINT
+Name: .I_BEREICH_1_FREIGABE_ANTRIEBE                               | Typ: BOOL
+Name: .I_BEREICH_1_HW_SICHER                                       | Typ: BOOL
+Name: .I_COM_ERR                                                   | Typ: BOOL
+Name: .I_FB_ERR                                                    | Typ: BOOL
+Name: .I_GROUP1_STATE                                              | Typ: USINT
+Name: .I_KEIN_NOTAUS                                               | Typ: BOOL
+Name: .I_MDP_EL7342                                                | Typ: ARRAY [0..3] OF ST_MDP_INPUT_EL7342
+Name: .I_MDP_SERVO                                                 | Typ: ARRAY [0..5] OF ST_MDP_INPUT
+Name: .I_OUT_ERR                                                   | Typ: BOOL
+Name: .I_SERVO_ACTUAL_TORQUE                                       | Typ: ARRAY [0..5] OF INT
+Name: .I_SERVO_DC_VOLTAGE                                          | Typ: ARRAY [0..5] OF UINT
+Name: .KAMERA                                                      | Typ: KAMERA_INPUTS
+Name: .LADERELAISLOG                                               | Typ: ARRAY [0..100] OF ST_CHARGELOG
+Name: .LOGFILE_DATA                                                | Typ: ARRAY [0..3] OF ST_FILE_DATA
+Name: .LOGFILE_DELIMITER                                           | Typ: STRING(80)
+Name: .LOGFILE_PARAM                                               | Typ: ARRAY [0..3] OF ST_LOGFILE_SETTING
+Name: .LOGFILE_PARAM_GLOBAL                                        | Typ: ST_FILE_STRING_SUFFIX
+Name: .LOGFILE_STATUS                                              | Typ: ARRAY [0..3] OF ST_FILE_WRITE_STATUS
+Name: .LOWER_CHECKBOUNDS                                           | Typ: SYS_CHECKBOUNDS_DETAILS
+Name: .MAX_AVERAGE_MEASURES                                        | Typ: INT16
+Name: .MAX_DBGOUTPUT_HEXLEN                                        | Typ: UDINT
+Name: .NOVRAM                                                      | Typ: ST_NOVRAM
+Name: .O_MDP_EL7342                                                | Typ: ARRAY [0..3] OF ST_MDP_OUTPUT_EL7342
+Name: .O_MDP_SERVO                                                 | Typ: ARRAY [0..5] OF ST_MDP_OUTPUT
+Name: .O_NOTAUS_BETAETIGEN                                         | Typ: BOOL
+Name: .O_QUITTIERUNG_NOTAUS                                        | Typ: BOOL
+Name: .O_QUITTIERUNG_POWERON                                       | Typ: BOOL
+Name: .PARKMODUS                                                   | Typ: BOOL
+Name: .RS232_CONFIG                                                | Typ: ARRAY [0..3] OF ST_RS232_CONFIG
+Name: .RTGRAPHIC_INIT_VAR                                          | Typ: BOOL
+Name: .RXBUFFER_COM1                                               | Typ: COMBUFFER
+Name: .RXBUFFER_COM2                                               | Typ: COMBUFFER
+Name: .SA_EDM_SIGNAL                                               | Typ: BOOL
+Name: .SA_RESERVER_8_3                                             | Typ: BOOL
+Name: .SA_SCHUTZFELDUMSCHALTUNG_A1                                 | Typ: BOOL
+Name: .SA_SCHUTZFELDUMSCHALTUNG_A2                                 | Typ: BOOL
+Name: .SA_SCHUTZFELDUMSCHALTUNG_B1                                 | Typ: BOOL
+Name: .SA_SCHUTZFELDUMSCHALTUNG_B2                                 | Typ: BOOL
+Name: .SA_SERVO_BREMSEN_LOESEN                                     | Typ: BOOL
+Name: .SA_SERVO_VERSORGUNG_AN                                      | Typ: BOOL
+Name: .SBCS_TABLES                                                 | Typ: ARRAY [1..2] OF ST_SBCSTABLE
+Name: .SERVONULLPUNKTOFFSET                                        | Typ: ARRAY [0..5] OF LREAL
+Name: .SE_NOT_HALT_KANAL_1                                         | Typ: BOOL
+Name: .SE_NOT_HALT_KANAL_2                                         | Typ: BOOL
+Name: .SE_OSSD_KANAL_1                                             | Typ: BOOL
+Name: .SE_OSSD_KANAL_2                                             | Typ: BOOL
+Name: .SYSTEMINFO                                                  | Typ: FW_SYSTEMINFOTYPE
+Name: .SYSTEMTASKINFOARR                                           | Typ: ARRAY [1..4] OF FW_SYSTEMTASKINFOTYPE
+Name: .SYSTEMTIME_DATE_AND_TIME_MAX                                | Typ: T_ULARGE_INTEGER
+Name: .SYSTEMTIME_DATE_AND_TIME_MIN                                | Typ: T_ULARGE_INTEGER
+Name: .SYSTEMTIME_MAX_MONTHDAYS                                    | Typ: ARRAY [0..1, 1..12] OF WORD
+Name: .SYSTEMTIME_MAX_YEARSDAY                                     | Typ: ARRAY [0..1, 0..13] OF WORD
+Name: .SYSTEMTIME_TICKSPERDAY                                      | Typ: T_ULARGE_INTEGER
+Name: .SYSTEMTIME_TICKSPERMSEC                                     | Typ: T_ULARGE_INTEGER
+Name: .SYSTEMTIME_TICKSPERSEC                                      | Typ: T_ULARGE_INTEGER
+Name: .TCMCGLOBAL                                                  | Typ: _TCMCGLOBAL
+Name: .TEST_CORE_HEARTBEAT                                         | Typ: BOOL
+Name: .TEST_NO_BMS                                                 | Typ: BOOL
+Name: .TEST_OHNE_HUB                                               | Typ: BOOL
+Name: .TEST_OPP_CHARGE                                             | Typ: BOOL
+Name: .TEST_SICK_FAHRFREIGABE                                      | Typ: BOOL
+Name: .TEST_SYSTEM_AUS                                             | Typ: BOOL
+Name: .TXBUFFER_COM1                                               | Typ: COMBUFFER
+Name: .TXBUFFER_COM2                                               | Typ: COMBUFFER
+Name: .UPPER_CHECKBOUNDS                                           | Typ: SYS_CHECKBOUNDS_DETAILS
+Name: .VERSION_COMLIB                                              | Typ: STRING(20)
+Name: .VISUDOEXECUTEUSERLEVELINIT                                  | Typ: BOOL
+Name: .WEST_EUROPE_TZI                                             | Typ: ST_TIMEZONEINFORMATION
+Name: ABLAUF_LOAD_UNLOAD.A_BUSY                                    | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.A_FEHLER                                  | Typ: EL_CONVEYOR_FEHLER
+Name: ABLAUF_LOAD_UNLOAD.A_FREIGABE_HUB_IN_FAHRPOSITION            | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.A_KOLLISION                               | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.A_LAM_CONTROL_SPEED                       | Typ: REAL
+Name: ABLAUF_LOAD_UNLOAD.A_LAM_CONTROL_START                       | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.A_LAM_STATUS_BEREIT                       | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.DISTANCE_MOVE                             | Typ: LREAL
+Name: ABLAUF_LOAD_UNLOAD.DISTANCE_MOVE_RETURN                      | Typ: LREAL
+Name: ABLAUF_LOAD_UNLOAD.EA_COMMAND                                | Typ: CONVEYOR_COMMAND (VAR_IN_OUT)
+Name: ABLAUF_LOAD_UNLOAD.EA_STATE                                  | Typ: CONVEYOR_STATE (VAR_IN_OUT)
+Name: ABLAUF_LOAD_UNLOAD.E_DELAY_START_RAMPE                       | Typ: TIME
+Name: ABLAUF_LOAD_UNLOAD.E_ENABLE                                  | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.E_ERROR_ACK                               | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.E_FREIGABE_ABDOCKEN                       | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.E_FREIGABE_CONVEYOR                       | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.E_HAND_BAND_LINKS                         | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.E_HAND_BAND_RECHTS                        | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.E_HAND_RUECKLAUF                          | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.E_HAND_VORLAUF                            | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.E_HUBSPEED_HEBEN                          | Typ: LREAL
+Name: ABLAUF_LOAD_UNLOAD.E_HUBSPEED_SENKEN                         | Typ: LREAL
+Name: ABLAUF_LOAD_UNLOAD.E_LADESCHALE_ERREICHT                     | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.E_LAM_STATUS_BEREIT                       | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.E_NACHPLATZ_FREI                          | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.E_PLATZ_FREI                              | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.E_PORT_ERKANNT                            | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.E_PORT_SW_UPDATE                          | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.E_SPEED                                   | Typ: REAL
+Name: ABLAUF_LOAD_UNLOAD.E_SPEED_BEI_RAMPE                         | Typ: REAL
+Name: ABLAUF_LOAD_UNLOAD.E_SPEED_NACHLAUF                          | Typ: REAL
+Name: ABLAUF_LOAD_UNLOAD.E_TIMEOUT                                 | Typ: TIME
+Name: ABLAUF_LOAD_UNLOAD.E_UNLOAD_LOAD_X_POS_R                     | Typ: LREAL
+Name: ABLAUF_LOAD_UNLOAD.E_VORPLATZ_FREI                           | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.E_Z_POS_FAHRFREIGABE_A                    | Typ: LREAL
+Name: ABLAUF_LOAD_UNLOAD.E_Z_POS_HUBSAFE_A                         | Typ: LREAL
+Name: ABLAUF_LOAD_UNLOAD.E_Z_POS_TRANSFER_A                        | Typ: LREAL
+Name: ABLAUF_LOAD_UNLOAD.FN_HAND_VOR                               | Typ: F_TRIG
+Name: ABLAUF_LOAD_UNLOAD.FN_HAND_ZURUECK                           | Typ: F_TRIG
+Name: ABLAUF_LOAD_UNLOAD.GESCHWINDIGKEIT                           | Typ: DINT
+Name: ABLAUF_LOAD_UNLOAD.HAND_GESCHWINDIGKEIT                      | Typ: DINT
+Name: ABLAUF_LOAD_UNLOAD.L_ABDOCKEN_FERTIG                         | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.L_GUELTIGEPARAMETER                       | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.L_HUBSPEED_HEBEN                          | Typ: LREAL
+Name: ABLAUF_LOAD_UNLOAD.L_HUBSPEED_SENKEN                         | Typ: LREAL
+Name: ABLAUF_LOAD_UNLOAD.L_ISTBELADEN                              | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.L_LOAD_EMPTY_DETECTED                     | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.L_NACHZIEHEN                              | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.L_PLATZSTAUSOK                            | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.L_READY_TO_DRIVE                          | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.L_SK_FREIGABEAGV                          | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.L_START_ABDOCKEN                          | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.L_TRANSPORTAKTIV                          | Typ: BOOL
+Name: ABLAUF_LOAD_UNLOAD.L_Z_POS_FAHRFREIGABE_A                    | Typ: LREAL
+Name: ABLAUF_LOAD_UNLOAD.L_Z_POS_LIFT                              | Typ: LREAL
+Name: ABLAUF_LOAD_UNLOAD.L_Z_POS_TRANSFER_A                        | Typ: LREAL
+Name: ABLAUF_LOAD_UNLOAD.SOLLGESCHWINDIGKEIT                       | Typ: DINT
+Name: ABLAUF_LOAD_UNLOAD.STARTSTOPPV                               | Typ: DINT
+Name: ABLAUF_LOAD_UNLOAD.STEP                                      | Typ: INT16
+Name: ABLAUF_LOAD_UNLOAD.TON_ABDOCKEN_FREIGABE                     | Typ: TON
+Name: ABLAUF_LOAD_UNLOAD.TON_ADD                                   | Typ: TON
+Name: ABLAUF_LOAD_UNLOAD.TON_FTF_MOVE_BACKWARDS                    | Typ: TON
+Name: ABLAUF_LOAD_UNLOAD.TON_KOLLISION                             | Typ: TON
+Name: ABLAUF_LOAD_UNLOAD.TON_KOLLISION_ENDE                        | Typ: TON
+Name: ABLAUF_LOAD_UNLOAD.TON_PLATZ_AUSRICHTEN                      | Typ: TON
+Name: ABLAUF_LOAD_UNLOAD.TON_PLATZ_BELEGT_KORREKT                  | Typ: TON
+Name: ABLAUF_LOAD_UNLOAD.TON_PLATZ_FEHLER                          | Typ: TON
+Name: ABLAUF_LOAD_UNLOAD.TON_PLATZ_LEER                            | Typ: TON
+Name: ABLAUF_LOAD_UNLOAD.TON_PLATZ_NACHLAUF                        | Typ: TON
+Name: ABLAUF_LOAD_UNLOAD.TON_START_RAMPE                           | Typ: TON_SS
+Name: ABLAUF_LOAD_UNLOAD.TON_START_TASTER_LIFT                     | Typ: TON
+Name: ABLAUF_LOAD_UNLOAD.TON_STOPP                                 | Typ: TON
+Name: ABLAUF_LOAD_UNLOAD.TON_STOPP_NACHZIEHEN                      | Typ: TON
+Name: ABLAUF_LOAD_UNLOAD.TON_TIMEOUT_TRANSPORT                     | Typ: TON
+Name: CONCAT_MAX.COUNT                                             | Typ: INT16
+Name: CONCAT_MAX.I                                                 | Typ: INT16
+Name: CONCAT_MAX.INSTR                                             | Typ: ARRAY [1..80] OF STRING(255)
+Name: CONCAT_MAX.OUTSTR                                            | Typ: STRING(255)
+Name: DEBUG_LOGGING.DAUER1                                         | Typ: TIME
+Name: DEBUG_LOGGING.L_BMS_ERRORWORD                                | Typ: WORD
+Name: DEBUG_LOGGING.L_INDEX                                        | Typ: INT16
+Name: DEBUG_LOGGING.TRIGGER_LOG                                    | Typ: ARRAY [0..20] OF D_TRIG
+Name: EC_MASTER_ID_LESEN.A_NETID                                   | Typ: STRING(23)
+Name: EC_MASTER_ID_LESEN.E_DEVICE_ID                               | Typ: UDINT
+Name: EC_MASTER_ID_LESEN.GET_ECMASTER_NETID                        | Typ: IOF_GETDEVICENETID
+Name: FEHLERSAMMLER.A_FEHLER                                       | Typ: BOOL
+Name: FEHLERSAMMLER.A_FEHLERNUMMER                                 | Typ: EL_ERRORCODE
+Name: FTF_ANGULAR_MOVE.A_BBUSY                                     | Typ: BOOL
+Name: FTF_ANGULAR_MOVE.A_BDONE                                     | Typ: BOOL
+Name: FTF_ANGULAR_MOVE.A_BFAIL                                     | Typ: BOOL
+Name: FTF_ANGULAR_MOVE.E_BRESET                                    | Typ: BOOL
+Name: FTF_ANGULAR_MOVE.E_BTRIGGER                                  | Typ: BOOL
+Name: FTF_ANGULAR_MOVE.E_LRRELATIVE_GOAL                           | Typ: LREAL
+Name: FTF_ANGULAR_MOVE.E_LRVELO                                    | Typ: LREAL
+Name: FTF_ANGULAR_MOVE.ISTEP                                       | Typ: INT16
+Name: FTF_ANGULAR_MOVE.L_MOVE                                      | Typ: BOOL
+Name: FTF_LINEAR_MOVE.A_BBUSY                                      | Typ: BOOL
+Name: FTF_LINEAR_MOVE.A_BDONE                                      | Typ: BOOL
+Name: FTF_LINEAR_MOVE.A_BFAIL                                      | Typ: BOOL
+Name: FTF_LINEAR_MOVE.E_BRESET                                     | Typ: BOOL
+Name: FTF_LINEAR_MOVE.E_BTRIGGER                                   | Typ: BOOL
+Name: FTF_LINEAR_MOVE.E_LRRELATIVE_GOAL                            | Typ: LREAL
+Name: FTF_LINEAR_MOVE.E_LRVELO                                     | Typ: LREAL
+Name: FTF_LINEAR_MOVE.ISTEP                                        | Typ: INT16
+Name: FTF_LINEAR_MOVE.L_MOVE                                       | Typ: BOOL
+Name: FTS_HMI.CURR_VELO                                            | Typ: LREAL
+Name: FTS_HMI.E_ENABLE                                             | Typ: BOOL
+Name: FTS_HMI.E_HAND_BW                                            | Typ: BOOL
+Name: FTS_HMI.E_HAND_FW                                            | Typ: BOOL
+Name: FTS_HMI.E_HAND_LEFT                                          | Typ: BOOL
+Name: FTS_HMI.E_HAND_RIGHT                                         | Typ: BOOL
+Name: FTS_HMI.E_NEW_VELO                                           | Typ: LREAL
+Name: FTS_HMI.E_RELATIVE_GOAL                                      | Typ: LREAL
+Name: FTS_HMI.E_RESET                                              | Typ: BOOL
+Name: FTS_HMI.E_SET_POS_0                                          | Typ: BOOL
+Name: FTS_HMI.E_SQUARE_WAIT                                        | Typ: BOOL
+Name: FTS_HMI.E_START_RELATIVE                                     | Typ: BOOL
+Name: FTS_HMI.E_START_SQUARE                                       | Typ: BOOL
+Name: FTS_HMI.E_STOP                                               | Typ: BOOL
+Name: FTS_HMI.L_DISTANCE                                           | Typ: LREAL
+Name: FTS_HMI.L_REPEAT                                             | Typ: INT16
+Name: FTS_HMI.L_SQUARETURN_CW                                      | Typ: BOOL
+Name: FTS_HMI.L_STEP_SQUARE                                        | Typ: INT16
+Name: FTS_HMI.R_IMP_KM                                             | Typ: R_TRIG
+Name: FTS_HMI.SQUARETURN90                                         | Typ: LREAL
+Name: FTS_HMI.TON_WAIT                                             | Typ: TON
+Name: FTS_HMI.TURNCCW                                              | Typ: BOOL
+Name: FTS_HMI.TURNCW                                               | Typ: BOOL
+Name: FTS_HMI.TURNVALUE                                            | Typ: LREAL
+Name: FTS_HMI.TURNVELOCITY                                         | Typ: LREAL
+Name: GET_TIME_DATE.A_BUSY                                         | Typ: BOOL
+Name: GET_TIME_DATE.A_INIT_DONE                                    | Typ: BOOL
+Name: GET_TIME_DATE.EA_ST_TIME_DATE                                | Typ: ST_TIME_DATE (VAR_IN_OUT)
+Name: GET_TIME_DATE.GET_TIME                                       | Typ: NT_GETTIME
+Name: GET_TIME_DATE.L_WSEC                                         | Typ: WORD
+Name: GET_TIME_DATE.STEP                                           | Typ: INT16
+Name: GET_TIME_DATE.TON_MSEC                                       | Typ: TON
+Name: HMI_SERVOS.A_BTB                                             | Typ: BOOL
+Name: HMI_SERVOS.A_DISABLED                                        | Typ: BOOL
+Name: HMI_SERVOS.A_ENDLESS_ACTIVE                                  | Typ: BOOL
+Name: HMI_SERVOS.A_FEHLERCODE                                      | Typ: UDINT
+Name: HMI_SERVOS.A_INDEX                                           | Typ: INT16
+Name: HMI_SERVOS.A_ISTPOSITION                                     | Typ: REAL
+Name: HMI_SERVOS.A_IST_VELOCITY                                    | Typ: REAL
+Name: HMI_SERVOS.CURRENT_VELOCITY                                  | Typ: LREAL
+Name: HMI_SERVOS.E_BUTTON_LINKS                                    | Typ: R_TRIG
+Name: HMI_SERVOS.E_BUTTON_RECHTS                                   | Typ: R_TRIG
+Name: HMI_SERVOS.E_JOG_BWD                                         | Typ: BOOL
+Name: HMI_SERVOS.E_JOG_FWD                                         | Typ: BOOL
+Name: HMI_SERVOS.E_MOVE_PARAM                                      | Typ: ST_SERVO_MOVE_PARAM
+Name: HMI_SERVOS.E_POS_OFFSET                                      | Typ: LREAL
+Name: HMI_SERVOS.E_RESET                                           | Typ: BOOL
+Name: HMI_SERVOS.E_SET_POS                                         | Typ: BOOL
+Name: HMI_SERVOS.E_SOLLPOSITION                                    | Typ: REAL
+Name: HMI_SERVOS.E_START_ABSOLUT                                   | Typ: BOOL
+Name: HMI_SERVOS.E_START_ENDLESS                                   | Typ: BOOL
+Name: HMI_SERVOS.E_STOP                                            | Typ: BOOL
+Name: HMI_SERVOS.SNAME                                             | Typ: STRING(80)
+Name: HUBTEST_2_MOTOREN.A_BTB_L                                    | Typ: BOOL
+Name: HUBTEST_2_MOTOREN.A_BTB_R                                    | Typ: BOOL
+Name: HUBTEST_2_MOTOREN.A_DISABLED                                 | Typ: BOOL
+Name: HUBTEST_2_MOTOREN.A_FEHLERCODE                               | Typ: UDINT
+Name: HUBTEST_2_MOTOREN.A_HUB1_ENTKOPPELT                          | Typ: BOOL
+Name: HUBTEST_2_MOTOREN.A_HUB1_GEKOPPELT                           | Typ: BOOL
+Name: HUBTEST_2_MOTOREN.A_HUB2_ENTKOPPELT                          | Typ: BOOL
+Name: HUBTEST_2_MOTOREN.A_HUB2_GEKOPPELT                           | Typ: BOOL
+Name: HUBTEST_2_MOTOREN.A_ISTPOSITION_L                            | Typ: REAL
+Name: HUBTEST_2_MOTOREN.A_ISTPOSITION_R                            | Typ: REAL
+Name: HUBTEST_2_MOTOREN.A_IST_TORQUE_L                             | Typ: INT16
+Name: HUBTEST_2_MOTOREN.A_IST_TORQUE_R                             | Typ: INT16
+Name: HUBTEST_2_MOTOREN.A_IST_VELOCITY_L                           | Typ: REAL
+Name: HUBTEST_2_MOTOREN.A_IST_VELOCITY_R                           | Typ: REAL
+Name: HUBTEST_2_MOTOREN.A_SERVOS_SYNCHRON                          | Typ: BOOL
+Name: HUBTEST_2_MOTOREN.A_TORQUE_L                                 | Typ: REAL
+Name: HUBTEST_2_MOTOREN.A_TORQUE_R                                 | Typ: REAL
+Name: HUBTEST_2_MOTOREN.CURRENT_VELOCITY                           | Typ: LREAL
+Name: HUBTEST_2_MOTOREN.E_ANWAHL_HUB                               | Typ: BOOL
+Name: HUBTEST_2_MOTOREN.E_ANWAHL_HUB2                              | Typ: BOOL
+Name: HUBTEST_2_MOTOREN.E_AUTOMATIK                                | Typ: BOOL
+Name: HUBTEST_2_MOTOREN.E_JOG_BWD                                  | Typ: BOOL
+Name: HUBTEST_2_MOTOREN.E_JOG_FWD                                  | Typ: BOOL
+Name: HUBTEST_2_MOTOREN.E_KOPPELN                                  | Typ: BOOL
+Name: HUBTEST_2_MOTOREN.E_POS_OFFSET_L                             | Typ: LREAL
+Name: HUBTEST_2_MOTOREN.E_POS_OFFSET_R                             | Typ: LREAL
+Name: HUBTEST_2_MOTOREN.E_SETPOS_L                                 | Typ: BOOL
+Name: HUBTEST_2_MOTOREN.E_SETPOS_R                                 | Typ: BOOL
+Name: HUBTEST_2_MOTOREN.E_STOP                                     | Typ: BOOL
+Name: HUBTEST_2_MOTOREN.E_SYNC_SERVOS                              | Typ: BOOL
+Name: HUBTEST_2_MOTOREN.E_VELOCITY                                 | Typ: LREAL
+Name: HUBTEST_2_MOTOREN.E_ZIELFAHRT                                | Typ: BOOL
+Name: HUBTEST_2_MOTOREN.E_ZIELPOS                                  | Typ: LREAL
+Name: HUBTEST_2_MOTOREN.L_ZIELFAHRT                                | Typ: BOOL
+Name: HUBTEST_2_MOTOREN.L_ZIELPOS                                  | Typ: LREAL
+Name: HUBTEST_2_MOTOREN.PAUSENZEIT                                 | Typ: TIME
+Name: HUBTEST_2_MOTOREN.STEP                                       | Typ: INT16
+Name: HUBTEST_2_MOTOREN.TON_PAUSE                                  | Typ: TON
+Name: LEUCHTMELDER.A_AMPEL_GELB                                    | Typ: BOOL
+Name: LEUCHTMELDER.A_AMPEL_GRUEN                                   | Typ: BOOL
+Name: LEUCHTMELDER.A_AMPEL_ROT                                     | Typ: BOOL
+Name: LEUCHTMELDER.A_RGB_BLUE                                      | Typ: BOOL
+Name: LEUCHTMELDER.A_RGB_GREEN                                     | Typ: BOOL
+Name: LEUCHTMELDER.A_RGB_RED                                       | Typ: BOOL
+Name: LEUCHTMELDER.BLINKCODE_MANUELL                               | Typ: FB_BLINKSEQUENZ
+Name: LEUCHTMELDER.FEHLERCODE_GELB                                 | Typ: FB_BLINKSEQUENZ
+Name: LEUCHTMELDER.FEHLERCODE_GRUEN                                | Typ: FB_BLINKSEQUENZ
+Name: LEUCHTMELDER.FEHLERCODE_ROT                                  | Typ: FB_BLINKSEQUENZ
+Name: LEUCHTMELDER.L_DRIVE_LEFT                                    | Typ: BOOL
+Name: LEUCHTMELDER.L_DRIVE_RIGHT                                   | Typ: BOOL
+Name: LEUCHTMELDER.L_DRIVE_STRAIGHT                                | Typ: BOOL
+Name: LEUCHTMELDER.L_RGB                                           | Typ: BYTE
+Name: LEUCHTMELDER.L_RGB_OVERRIDE                                  | Typ: BOOL
+Name: LEUCHTMELDER.L_TESTRGB                                       | Typ: BOOL
+Name: LEUCHTMELDER.TP_F_FRG_PULS                                   | Typ: TP
+Name: LEUCHTMELDER.TP_LM_PULS                                      | Typ: TP
+Name: LEUCHTMELDER.TP_PARKMODUS_ENDE                               | Typ: TP
+Name: LEUCHTMELDER.TP_PAUSE_F_FRG                                  | Typ: TP
+Name: LEUCHTMELDER.TP_PAUSE_LM                                     | Typ: TP
+Name: MAIN.COM1_CONTROL                                            | Typ: SERIALLINECONTROL
+Name: MAIN.COM1_CONTROLERROR                                       | Typ: BOOL
+Name: MAIN.COM1_CONTROLERRORID                                     | Typ: COMERROR_T
+Name: MAIN.FBWRITEPERSISTENTDATA                                   | Typ: FB_WRITEPERSISTENTDATA
+Name: MAIN.INIT                                                    | Typ: BOOL
+Name: MAIN_3D_KAMERA.A_ALIVE_KAMERA                                | Typ: BOOL
+Name: MAIN_3D_KAMERA.A_FEHLER_WATCHDOG_KAMERA                      | Typ: BOOL
+Name: MAIN_3D_KAMERA.COUNT_TIMEOUT_KAMERA                          | Typ: UINT16
+Name: MAIN_3D_KAMERA.FP_TRIGGER_KAMERA                             | Typ: R_TRIG
+Name: MAIN_3D_KAMERA.K_KAMERA                                      | Typ: INT16
+Name: MAIN_3D_KAMERA.L_IN_HEARTBEAT_KAMERA                         | Typ: BOOL
+Name: MAIN_3D_KAMERA.TOF_ABORT_JOB_KAMERA                          | Typ: TOF
+Name: MAIN_3D_KAMERA.TON_KOMM_OK_KAMERA                            | Typ: TON
+Name: MAIN_3D_KAMERA.TON_WATCHDOG_KAMERA                           | Typ: TON
+Name: MAIN_AIC.A_RGB_BLUE                                          | Typ: BOOL
+Name: MAIN_AIC.A_RGB_GREEN                                         | Typ: BOOL
+Name: MAIN_AIC.A_RGB_RED                                           | Typ: BOOL
+Name: MAIN_BK_SERVO.A_ALLE_SERVO_STOPPED                           | Typ: BOOL
+Name: MAIN_BK_SERVO.E_POSOFFSET                                    | Typ: ARRAY [0..5] OF LREAL
+Name: MAIN_BK_SERVO.I                                              | Typ: INT16
+Name: MAIN_BK_SERVO.L_ACT_DIFF_KOPPELN                             | Typ: REAL
+Name: MAIN_BK_SERVO.L_ERROR_KOPPELN                                | Typ: ARRAY [0..9] OF BOOL
+Name: MAIN_BK_SERVO.L_FIRSTTIMEDONE_KOPPELN                        | Typ: BOOL
+Name: MAIN_BK_SERVO.L_MAX_DIFF_KOPPELN                             | Typ: REAL
+Name: MAIN_BK_SERVO.L_MIN_DIFF_KOPPELN                             | Typ: REAL
+Name: MAIN_BK_SERVO.L_POSSIBLE_KOPPELN                             | Typ: BOOL
+Name: MAIN_BK_SERVO.L_STATE_KOPPELN                                | Typ: STRING(80)
+Name: MAIN_BK_SERVO.L_STEP_KOPPELN                                 | Typ: INT16
+Name: MAIN_BK_SERVO.SERVO_CONTROL                                  | Typ: ARRAY [0..5] OF FB_BK_SERVO_MDP
+Name: MAIN_BMS.A_COMM_OK                                           | Typ: BOOL
+Name: MAIN_BMS.A_ERROR                                             | Typ: BOOL
+Name: MAIN_BMS.A_SHUTDOWN                                          | Typ: BOOL
+Name: MAIN_BMS.BACKUP_BMS_DATE_TIME                                | Typ: STRING(80)
+Name: MAIN_BMS.BACKUP_CHARGE_INDICATOR                             | Typ: BOOL
+Name: MAIN_BMS.BMS_ERRORCODE                                       | Typ: BMS_ERROR
+Name: MAIN_BMS.E_SET_SOC                                           | Typ: BOOL
+Name: MAIN_BMS.E_SET_TEMP                                          | Typ: BOOL
+Name: MAIN_BMS.E_SOC_VALUE                                         | Typ: BYTE
+Name: MAIN_BMS.E_TEMP_VALUE                                        | Typ: BYTE
+Name: MAIN_BMS.L_MANUELL_LADEN                                     | Typ: BOOL
+Name: MAIN_BMS.L_STRING                                            | Typ: STRING(80)
+Name: MAIN_BMS.POS                                                 | Typ: INT16
+Name: MAIN_BMS.TON_BMS_ERROR_SHUTDOWN                              | Typ: TON
+Name: MAIN_BMS.TON_BMS_GENERAL_ERROR                               | Typ: TON
+Name: MAIN_BMS.TON_TIMEOUT                                         | Typ: TON
+Name: MAIN_CORE.A_ALIVE                                            | Typ: BOOL
+Name: MAIN_CORE.A_FEHLER_WATCHDOG                                  | Typ: BOOL
+Name: MAIN_CORE.A_FTF_DREHT_ODER_STOPP                             | Typ: BOOL
+Name: MAIN_CORE.L_IN_HEARTBEAT                                     | Typ: BOOL
+Name: MAIN_CORE.TON_LIMITACTIVE_LINKS                              | Typ: TON
+Name: MAIN_CORE.TON_LIMITACTIVE_RECHTS                             | Typ: TON
+Name: MAIN_CORE.TON_WATCHDOG                                       | Typ: TON
+Name: MAIN_ETHERCAT.A_ERROR                                        | Typ: BOOL
+Name: MAIN_ETHERCAT.A_ERRORCODE                                    | Typ: UINT16
+Name: MAIN_ETHERCAT.A_ETHERCAT_OK                                  | Typ: BOOL
+Name: MAIN_ETHERCAT.DEBUG2                                         | Typ: BOOL
+Name: MAIN_ETHERCAT.DISABLERESET                                   | Typ: BOOL
+Name: MAIN_ETHERCAT.ERRORSLAVESTATE                                | Typ: WORD
+Name: MAIN_ETHERCAT.GET_MASTERSTATE                                | Typ: FB_ECGETMASTERSTATE
+Name: MAIN_ETHERCAT.GET_SLAVE_STATES                               | Typ: FB_ECGETALLSLAVESTATES
+Name: MAIN_ETHERCAT.I                                              | Typ: INT16
+Name: MAIN_ETHERCAT.MASTERSTATE                                    | Typ: WORD
+Name: MAIN_ETHERCAT.SET_SLAVE_STATE                                | Typ: FB_ECREQSLAVESTATE
+Name: MAIN_ETHERCAT.SLAVESNUMBER                                   | Typ: UINT16
+Name: MAIN_ETHERCAT.SLAVE_COUNT                                    | Typ: FB_ECGETSLAVECOUNT
+Name: MAIN_ETHERCAT.SLAVE_STATE                                    | Typ: ARRAY [1..20] OF ST_ECSLAVESTATE
+Name: MAIN_ETHERCAT.TOF_ERROR                                      | Typ: TOF
+Name: MAIN_ETHERCAT.TON_MASTER_NIO                                 | Typ: TON
+Name: MAIN_ETHERCAT.TON_MASTER_RESET                               | Typ: TON
+Name: MAIN_ETHERCAT.TON_SLAVE_NIO                                  | Typ: TON
+Name: MAIN_LOAD_UNLOAD.L_CONVEYORCOMMAND                           | Typ: CONVEYOR_COMMAND
+Name: MAIN_LOAD_UNLOAD.L_FAHRFREIGABE                              | Typ: INT16
+Name: MAIN_LOAD_UNLOAD.L_HUB                                       | Typ: INT16
+Name: MAIN_LOAD_UNLOAD.L_MOVE                                      | Typ: INT16
+Name: MAIN_LOAD_UNLOAD.L_TESTOHNEAIC                               | Typ: BOOL
+Name: MAIN_LOGFILES.INST_DELETE                                    | Typ: ARRAY [0..3] OF FB_DELETE_OLD
+Name: MAIN_LOGFILES.INST_LOGFILE                                   | Typ: ARRAY [0..3] OF FB_OPEN_WRITE_CLOSE_FILE
+Name: MAIN_LOGFILES.L_EL_LOGFILE_INDEX                             | Typ: EL_LOGFILE
+Name: MAIN_MACRO_MOVE.FP_ABORT                                     | Typ: R_TRIG
+Name: MAIN_MACRO_MOVE.FP_START_ANGULAR                             | Typ: R_TRIG
+Name: MAIN_MACRO_MOVE.FP_START_LINEAR                              | Typ: R_TRIG
+Name: MAIN_MACRO_MOVE.L_DISTANCE                                   | Typ: LREAL
+Name: MAIN_MAPPING_IN_OUT.E_MAPPING_IN                             | Typ: BOOL
+Name: MAIN_NC_STEUERUNG.A_BUSY                                     | Typ: ARRAY [0..5] OF BOOL
+Name: MAIN_NC_STEUERUNG.A_B_RESET_BUSY                             | Typ: ARRAY [0..5] OF BOOL
+Name: MAIN_NC_STEUERUNG.A_ERRPOSDIFFERENZ                          | Typ: ARRAY [0..5] OF BOOL
+Name: MAIN_NC_STEUERUNG.A_ERRSLAVE_MISSING                         | Typ: ARRAY [0..5] OF BOOL
+Name: MAIN_NC_STEUERUNG.FP_FEHLER_POS_DIFFERENZ                    | Typ: ARRAY [0..5] OF R_TRIG
+Name: MAIN_NC_STEUERUNG.I                                          | Typ: INT16
+Name: MAIN_NC_STEUERUNG.INST_SERVO_MC_GEARIN                       | Typ: ARRAY [0..5] OF MC_GEARIN
+Name: MAIN_NC_STEUERUNG.INST_SERVO_MC_GEAROUT                      | Typ: ARRAY [0..5] OF MC_GEAROUT
+Name: MAIN_NC_STEUERUNG.INST_SERVO_MC_MOVE_ABSOLUTE                | Typ: ARRAY [0..5] OF MC_MOVEABSOLUTE
+Name: MAIN_NC_STEUERUNG.INST_SERVO_MC_MOVE_ABSOLUTE_2              | Typ: ARRAY [0..5] OF MC_MOVEABSOLUTE
+Name: MAIN_NC_STEUERUNG.INST_SERVO_MC_MOVE_JOG                     | Typ: ARRAY [0..5] OF MC_JOG
+Name: MAIN_NC_STEUERUNG.INST_SERVO_MC_MOVE_MODULO                  | Typ: ARRAY [0..5] OF MC_MOVEMODULO
+Name: MAIN_NC_STEUERUNG.INST_SERVO_MC_MOVE_MODULO_2                | Typ: ARRAY [0..5] OF MC_MOVEMODULO
+Name: MAIN_NC_STEUERUNG.INST_SERVO_MC_MOVE_VELOCITY                | Typ: ARRAY [0..5] OF MC_MOVEVELOCITY
+Name: MAIN_NC_STEUERUNG.INST_SERVO_MC_POWER                        | Typ: ARRAY [0..5] OF MC_POWER
+Name: MAIN_NC_STEUERUNG.INST_SERVO_MC_RESET                        | Typ: ARRAY [0..5] OF MC_RESET
+Name: MAIN_NC_STEUERUNG.INST_SERVO_MC_SOERESET                     | Typ: ARRAY [0..5] OF FB_SOERESET
+Name: MAIN_NC_STEUERUNG.INST_SERVO_MC_STOP                         | Typ: ARRAY [0..5] OF MC_STOP
+Name: MAIN_NC_STEUERUNG.L_B_RESET_FLAGS                            | Typ: BOOL
+Name: MAIN_NC_STEUERUNG.L_B_SPERRE_WEIL_SLAVE                      | Typ: ARRAY [0..5] OF BOOL
+Name: MAIN_NC_STEUERUNG.L_DEBUG_POS_DIFF_FEHLER_WERTE              | Typ: ARRAY [0..5] OF STRING(80)
+Name: MAIN_NC_STEUERUNG.L_ERROR_MC_FEHLERTEXT                      | Typ: ARRAY [0..5] OF STRING(80)
+Name: MAIN_NC_STEUERUNG.L_FEHLER_GUELTIG                           | Typ: BOOL
+Name: MAIN_NC_STEUERUNG.L_FEHLER_POS_DIFFERENZ                     | Typ: ARRAY [0..5] OF BOOL
+Name: MAIN_NC_STEUERUNG.L_POS_1                                    | Typ: ARRAY [0..5] OF LREAL
+Name: MAIN_NC_STEUERUNG.L_POS_2                                    | Typ: ARRAY [0..5] OF LREAL
+Name: MAIN_NC_STEUERUNG.L_POS_TOLLERANZ                            | Typ: LREAL
+Name: MAIN_NC_STEUERUNG.L_ST_EMPTY_INST_MOVE_OPTIONS               | Typ: ARRAY [0..5] OF ST_MOVEOPTIONS
+Name: MAIN_NC_STEUERUNG.L_TMP                                      | Typ: LREAL
+Name: MAIN_SCANNER.A_KEIN_NOT_HALT_SCANNER                         | Typ: BOOL
+Name: MAIN_SCANNER.A_MAX_SPEED                                     | Typ: INT16
+Name: MAIN_SCANNER.A_SCANNERHINTENBEREITUNDSICHER                  | Typ: BOOL
+Name: MAIN_SCANNER.A_SCANNERLINKSBEREITUNDSICHER                   | Typ: BOOL
+Name: MAIN_SCANNER.A_SCANNERRECHTSBEREITUNDSICHER                  | Typ: BOOL
+Name: MAIN_SCANNER.A_SCANNERVORNEBEREITUNDSICHER                   | Typ: BOOL
+Name: MAIN_SCANNER.A_SCHUTZFELD_1_OK                               | Typ: BOOL
+Name: MAIN_SCANNER.A_SCHUTZFELD_2_OK                               | Typ: BOOL
+Name: MAIN_SCANNER.A_SCHUTZFELD_3D_STOPP_OK                        | Typ: BOOL
+Name: MAIN_SCANNER.A_SCHUTZFELD_3D_WARN_OK                         | Typ: BOOL
+Name: MAIN_SCANNER.A_SCHUTZFELD_3_OK                               | Typ: BOOL
+Name: MAIN_SCANNER.A_SCHUTZFELD_4_OK                               | Typ: BOOL
+Name: MAIN_SCANNER.A_SCHUTZFELD_H_1_OK                             | Typ: BOOL
+Name: MAIN_SCANNER.A_SCHUTZFELD_H_2_OK                             | Typ: BOOL
+Name: MAIN_SCANNER.A_SCHUTZFELD_H_3_OK                             | Typ: BOOL
+Name: MAIN_SCANNER.A_SCHUTZFELD_H_BEREIT                           | Typ: BOOL
+Name: MAIN_SCANNER.A_SCHUTZFELD_L_1_OK                             | Typ: BOOL
+Name: MAIN_SCANNER.A_SCHUTZFELD_L_2_OK                             | Typ: BOOL
+Name: MAIN_SCANNER.A_SCHUTZFELD_L_3_OK                             | Typ: BOOL
+Name: MAIN_SCANNER.A_SCHUTZFELD_R_1_OK                             | Typ: BOOL
+Name: MAIN_SCANNER.A_SCHUTZFELD_R_2_OK                             | Typ: BOOL
+Name: MAIN_SCANNER.A_SCHUTZFELD_R_3_OK                             | Typ: BOOL
+Name: MAIN_SCANNER.IBN_3D                                          | Typ: BOOL
+Name: MAIN_SCANNER.TOF_SCANNER_OSSD_OK                             | Typ: TOF
+Name: MAPPING_3D_KAMERA.E_MAPPING_IN                               | Typ: BOOL
+Name: MAPPING_3D_KAMERA.TON_FREIGABE                               | Typ: TON
+Name: MAPPING_AIC.E_MAPPING_IN                                     | Typ: BOOL
+Name: MAPPING_AIC.TON_FEHLER_HALTEN                                | Typ: TON
+Name: MAPPING_AIC.T_FEHLER_HALTEN                                  | Typ: BOOL
+Name: MAPPING_CORE.E_MAPPING_IN                                    | Typ: BOOL
+Name: MAPPING_COUNTER.E_MAPPING_IN                                 | Typ: BOOL
+Name: MAPPING_COUNTER.L_COUNTERDIFFERENCE1                         | Typ: REAL
+Name: MAPPING_COUNTER.L_COUNTERDIFFERENCE2                         | Typ: REAL
+Name: MAPPING_COUNTER.L_CURRENT_POS1                               | Typ: REAL
+Name: MAPPING_COUNTER.L_CURRENT_POS2                               | Typ: REAL
+Name: MAPPING_COUNTER.L_LASTCOUNTERVALUE1                          | Typ: UINT16
+Name: MAPPING_COUNTER.L_LASTCOUNTERVALUE2                          | Typ: UINT16
+Name: MAPPING_IO_KLEMMEN.A_FAHRFREIGABE                            | Typ: BOOL
+Name: MAPPING_IO_KLEMMEN.A_FAHRFREIGABE_HUB_INTERN                 | Typ: BOOL
+Name: MAPPING_IO_KLEMMEN.A_FAHRFREIGABE_RAEDER_INTERN              | Typ: BOOL
+Name: MAPPING_IO_KLEMMEN.A_HAUPTSCHUETZ_EIN                        | Typ: BOOL
+Name: MAPPING_IO_KLEMMEN.A_KEIN_NOT_HALT_TASTER_AKTIV              | Typ: BOOL
+Name: MAPPING_IO_KLEMMEN.A_NOT_HALT_SICHER                         | Typ: BOOL
+Name: MAPPING_IO_KLEMMEN.E_MAPPING_IN                              | Typ: BOOL
+Name: MAPPING_IO_KLEMMEN.FP_QUITTIERUNG_EXTERN                     | Typ: R_TRIG
+Name: MAPPING_IO_KLEMMEN.HMI_QUIT_NOTAUS                           | Typ: BOOL
+Name: MAPPING_IO_KLEMMEN.L_FAHRFREIGABEGLOBAL                      | Typ: BOOL
+Name: MAPPING_IO_KLEMMEN.L_FEHLER_SERVOSPANNUNG                    | Typ: BOOL
+Name: MAPPING_IO_KLEMMEN.L_QUITTIERUNG                             | Typ: BOOL
+Name: MAPPING_IO_KLEMMEN.L_QUITTIERUNG_EXTERN                      | Typ: BOOL
+Name: MAPPING_IO_KLEMMEN.L_START_ERSTE_QUITTIERUNG                 | Typ: BOOL
+Name: MAPPING_IO_KLEMMEN.L_START_ZWEITE_QUITTIERUNG                | Typ: BOOL
+Name: MAPPING_IO_KLEMMEN.TOF_ERSTE_QUITTIERUNG                     | Typ: TOF
+Name: MAPPING_IO_KLEMMEN.TOF_TIMEOUT_QUITTIERUNG                   | Typ: TOF
+Name: MAPPING_IO_KLEMMEN.TON_MOTOR_RESET                           | Typ: TON
+Name: MAPPING_IO_KLEMMEN.TON_RUECKWAERTS                           | Typ: TON
+Name: MAPPING_IO_KLEMMEN.TON_TIMEOUT_POWERON                       | Typ: TON
+Name: MAPPING_IO_KLEMMEN.TON_WIEDERANLAUF_HUB                      | Typ: TON
+Name: MAPPING_IO_KLEMMEN.TON_WIEDERANLAUF_RAEDER                   | Typ: TON
+Name: MAPPING_IO_KLEMMEN.TP_HUPE                                   | Typ: TP
+Name: MAPPING_IO_KLEMMEN.TP_HUPE_KOLLISION                         | Typ: TP
+Name: MAPPING_IO_KLEMMEN.TP_HUPE_PAUSE                             | Typ: TP
+Name: MAPPING_IO_KLEMMEN.TP_MOTOR_RESET                            | Typ: TP
+Name: MAPPING_IO_KLEMMEN.TP_QUITTIERUNG_EXTERN                     | Typ: TP
+Name: MAPPING_IO_KLEMMEN.TP_QUITTIERUNG_POWERON                    | Typ: TP
+Name: MAPPING_IO_KLEMMEN.TP_WAIT_MOTOR_RESTART                     | Typ: TP
+Name: MAPPING_ROLLERDRIVE.E_MAPPING_IN                             | Typ: BOOL
+Name: MAPPING_SERVOS.E_MAPPING_IN                                  | Typ: BOOL
+Name: MAPPING_SERVOS.I                                             | Typ: INT16
+Name: MAPPING_SERVOS.L_FREIGABEFAHRTAGV                            | Typ: BOOL
+Name: MAPPING_SERVOS.TON_DISABLED                                  | Typ: ARRAY [0..5] OF TON
+Name: PRG_ADD_HISTORY_BUFFER_ENTRY.EA_ST_HISTORY_BUFFER            | Typ: ARRAY [0..25] OF ST_TRACKING_HISTORY_BUFFER_DATA (VAR_IN_OUT)
+Name: PRG_ADD_HISTORY_BUFFER_ENTRY.E_ST_ENTRY                      | Typ: ST_TRACKING_HISTORY_BUFFER_DATA
+Name: PRG_ADD_HISTORY_BUFFER_ENTRY.K                               | Typ: INT16
+Name: PRG_BMS_COMM.BCLEARBUFFER                                    | Typ: BOOL
+Name: PRG_BMS_COMM.BERROR                                          | Typ: BOOL
+Name: PRG_BMS_COMM.BNEWDATA                                        | Typ: BOOL
+Name: PRG_BMS_COMM.CRC                                             | Typ: BYTE
+Name: PRG_BMS_COMM.E_SSEND                                         | Typ: STRING(255)
+Name: PRG_BMS_COMM.FBCLEARBUFFER                                   | Typ: CLEARCOMBUFFER
+Name: PRG_BMS_COMM.I                                               | Typ: UDINT
+Name: PRG_BMS_COMM.LOCAL_POSITION                                  | Typ: INT16
+Name: PRG_BMS_COMM.L_RECEIVE_BYTE_INDEX                            | Typ: INT16
+Name: PRG_BMS_COMM.L_SSEND                                         | Typ: STRING(255)
+Name: PRG_BMS_COMM.L_TRIGGERSEND                                   | Typ: BOOL
+Name: PRG_BMS_COMM.NERRORID                                        | Typ: UDINT
+Name: PRG_BMS_COMM.RECEIVE                                         | Typ: RECEIVEDATA
+Name: PRG_BMS_COMM.RECEIVEBUSY                                     | Typ: BOOL
+Name: PRG_BMS_COMM.RECEIVECOUNTER                                  | Typ: UDINT
+Name: PRG_BMS_COMM.RECEIVECOUNTER2                                 | Typ: UDINT
+Name: PRG_BMS_COMM.RECEIVEERROR                                    | Typ: BOOL
+Name: PRG_BMS_COMM.RECEIVEERRORID                                  | Typ: COMERROR_T
+Name: PRG_BMS_COMM.RECEIVETIMEOUT                                  | Typ: BOOL
+Name: PRG_BMS_COMM.RS232_CONFIG                                    | Typ: ST_RS232_CONFIG (VAR_IN_OUT)
+Name: PRG_BMS_COMM.RXDATA                                          | Typ: ARRAY [0..255] OF BYTE
+Name: PRG_BMS_COMM.RXSTRING                                        | Typ: STRING(255)
+Name: PRG_BMS_COMM.RX_BUFFER                                       | Typ: COMBUFFER (VAR_IN_OUT)
+Name: PRG_BMS_COMM.SEND                                            | Typ: SENDSTRING255
+Name: PRG_BMS_COMM.SENDBUSY                                        | Typ: BOOL
+Name: PRG_BMS_COMM.SENDE                                           | Typ: STRING(80)
+Name: PRG_BMS_COMM.SENDERRORID                                     | Typ: COMERROR_T
+Name: PRG_BMS_COMM.SSTART                                          | Typ: STRING(1)
+Name: PRG_BMS_COMM.TX_BUFFER                                       | Typ: COMBUFFER (VAR_IN_OUT)
+Name: PRG_CHARGE_CONTROL.AUTOCHARGE                                | Typ: BOOL
+Name: PRG_CHARGE_CONTROL.A_CHARGECURRENTACTIVE                     | Typ: BOOL
+Name: PRG_CHARGE_CONTROL.A_CHARGERELAIS                            | Typ: BOOL
+Name: PRG_CHARGE_CONTROL.A_CHARGETIMEOUT                           | Typ: BOOL
+Name: PRG_CHARGE_CONTROL.A_FEHLER_CHARGEREQUEST                    | Typ: BOOL
+Name: PRG_CHARGE_CONTROL.A_SHUTDOWNAFTERCHARGE                     | Typ: BOOL
+Name: PRG_CHARGE_CONTROL.E_RESET_CHARGING                          | Typ: BOOL
+Name: PRG_CHARGE_CONTROL.E_SENSORLADESCHALEERKANNT                 | Typ: BOOL
+Name: PRG_CHARGE_CONTROL.FP_AUTOCHARGE                             | Typ: R_TRIG
+Name: PRG_CHARGE_CONTROL.FP_MANUALCHARGE                           | Typ: R_TRIG
+Name: PRG_CHARGE_CONTROL.FP_MANUALCHARGEBUTTON                     | Typ: R_TRIG
+Name: PRG_CHARGE_CONTROL.FP_SHUTDOWNAFTERCHARGE                    | Typ: R_TRIG
+Name: PRG_CHARGE_CONTROL.I                                         | Typ: INT16
+Name: PRG_CHARGE_CONTROL.IBN_TEST                                  | Typ: BOOL
+Name: PRG_CHARGE_CONTROL.L_CHARGING                                | Typ: BOOL
+Name: PRG_CHARGE_CONTROL.L_OPP_CHARGE                              | Typ: BOOL
+Name: PRG_CHARGE_CONTROL.MANUALCHARGE                              | Typ: BOOL
+Name: PRG_CHARGE_CONTROL.TON_CHARGEBUTTON                          | Typ: TON
+Name: PRG_CHARGE_CONTROL.TON_CHARGERELAISTIMEOUT                   | Typ: TON
+Name: PRG_CHARGE_CONTROL.TON_DISABLECHARGEENDSHUTDOWN              | Typ: TON
+Name: PRG_CHARGE_CONTROL.TON_LADESCHALEERKANNT                     | Typ: TON
+Name: PRG_CHARGE_CONTROL.TON_OPP_CHARGE                            | Typ: TON
+Name: PRG_CHARGE_CONTROL.TON_TIMEOUT_LADESCHALE                    | Typ: TON
+Name: PRG_CHARGE_CONTROL.TON_TIMEOUT_MANUAL                        | Typ: TON
+Name: PRG_DEVICE_RESET.A_BUSY                                      | Typ: BOOL
+Name: PRG_DEVICE_RESET.ETHERCAT_RESET                              | Typ: IOF_DEVICERESET
+Name: PRG_DEVICE_RESET.E_DEVICE_ID                                 | Typ: UDINT
+Name: PRG_DEVICE_RESET.E_RESET                                     | Typ: BOOL
+Name: PRG_MAPPING_BMS.ARSTRING                                     | Typ: ARRAY [0..40] OF STRING(80)
+Name: PRG_MAPPING_BMS.ARSTRINGDEBUG                                | Typ: ARRAY [0..40] OF STRING(80)
+Name: PRG_MAPPING_BMS.BDEBUG                                       | Typ: BOOL
+Name: PRG_MAPPING_BMS.CBDATA                                       | Typ: UDINT
+Name: PRG_MAPPING_BMS.CRC                                          | Typ: BYTE
+Name: PRG_MAPPING_BMS.DATA                                         | Typ: ARRAY [0..40] OF BYTE
+Name: PRG_MAPPING_BMS.DEBUG                                        | Typ: INT16
+Name: PRG_MAPPING_BMS.DEBUGTD1                                     | Typ: INT16
+Name: PRG_MAPPING_BMS.DEBUGTD1STRING                               | Typ: STRING(80)
+Name: PRG_MAPPING_BMS.E_STRING_IN                                  | Typ: STRING(80)
+Name: PRG_MAPPING_BMS.I                                            | Typ: INT16
+Name: PRG_MAPPING_BMS.IPOSDELIMITER                                | Typ: INT16
+Name: PRG_MAPPING_BMS.NUMERCELLS                                   | Typ: BYTE
+Name: PRG_RING_BUFFER_NEW_ENTRY.EA_ST_RING_BUFFER                  | Typ: ST_RING_BUFFER (VAR_IN_OUT)
+Name: PRG_RING_BUFFER_RESET_ENTRY.EA_ST_DATA                       | Typ: ST_FILE_DATA (VAR_IN_OUT)
+Name: PRG_SET_DATA_IN_LOGFILE_BUFFER.EA_ST_LOGFILE_DATA            | Typ: ST_FILE_DATA (VAR_IN_OUT)
+Name: PRG_SET_DATA_IN_LOGFILE_BUFFER.EA_ST_LOGFILE_SETTING         | Typ: ST_LOGFILE_SETTING (VAR_IN_OUT)
+Name: PRG_SET_DATA_IN_LOGFILE_BUFFER.E_STRMAX_TEXT                 | Typ: STRING(255)
+Name: PRG_SET_FLANKS_INCL_RF_TRIG.EA_ST_BOOL_COMPONENT             | Typ: ST_BOOL_COMPONENTS_INCL_RF_TRIG (VAR_IN_OUT)
+Name: READWRITENOVRAM.FBGETDPRAMINFO                               | Typ: FB_GETDPRAMINFO
+Name: READWRITENOVRAM.FBREADWRITENOVRAM                            | Typ: FB_NOVRAMREADWRITEEX
+Name: READWRITENOVRAM.I                                            | Typ: INT16
+Name: READWRITENOVRAM.ISTEP                                        | Typ: INT16
+Name: READWRITENOVRAM.L_READVALUES                                 | Typ: BOOL
+Name: READWRITENOVRAM.L_WRITEVALUES                                | Typ: BOOL
+Name: READWRITENOVRAM.NEWSERVONULLPUNKT                            | Typ: BOOL
+Name: SERVO_SINGLE_MAPPING.E_EL_NEGATIV                            | Typ: BOOL
+Name: SERVO_SINGLE_MAPPING.E_EL_POSITIV                            | Typ: BOOL
+Name: SERVO_SINGLE_MAPPING.E_FREIGABE_EXTERN                       | Typ: BOOL
+Name: SERVO_SINGLE_MAPPING.E_INDEX                                 | Typ: EL_SERVO
+Name: SERVO_SINGLE_MAPPING.E_MAPPING_IN                            | Typ: BOOL
+Name: SYSTEM_EIN_AUS.A_CORE_POWERTASTE                             | Typ: BOOL
+Name: SYSTEM_EIN_AUS.A_KOMPLETT_AUS                                | Typ: BOOL
+Name: SYSTEM_EIN_AUS.A_SYSTEM_EIN                                  | Typ: BOOL
+Name: SYSTEM_EIN_AUS.L_SHUTDOWN                                    | Typ: BOOL
+Name: SYSTEM_EIN_AUS.TON_ALLES_AUSSCHALTEN                         | Typ: TON
+Name: SYSTEM_EIN_AUS.TON_CORE_FORCE_SHUTDOWN                       | Typ: TON
+Name: SYSTEM_EIN_AUS.TON_CORE_NOCONN                               | Typ: TON
+Name: SYSTEM_EIN_AUS.TON_FORCE_SHUTDOWN                            | Typ: TON
+Name: SYSTEM_EIN_AUS.TP_BOOT_VORGANG                               | Typ: TP
+Name: SYSTEM_EIN_AUS.TP_CORE_AUS                                   | Typ: TP
+Name: SYSTEM_EIN_AUS.TP_CORE_EIN                                   | Typ: TP
+Name: TAKTGENERATOR.A_1000MS                                       | Typ: BOOL
+Name: TAKTGENERATOR.A_125MS                                        | Typ: BOOL
+Name: TAKTGENERATOR.A_16000MS                                      | Typ: BOOL
+Name: TAKTGENERATOR.A_2000MS                                       | Typ: BOOL
+Name: TAKTGENERATOR.A_250MS                                        | Typ: BOOL
+Name: TAKTGENERATOR.A_4000MS                                       | Typ: BOOL
+Name: TAKTGENERATOR.A_500MS                                        | Typ: BOOL
+Name: TAKTGENERATOR.A_8000MS                                       | Typ: BOOL
+Name: TAKTGENERATOR.A_FD_1000MS                                    | Typ: BOOL
+Name: TAKTGENERATOR.A_FD_125MS                                     | Typ: BOOL
+Name: TAKTGENERATOR.A_FD_16000MS                                   | Typ: BOOL
+Name: TAKTGENERATOR.A_FD_2000MS                                    | Typ: BOOL
+Name: TAKTGENERATOR.A_FD_250MS                                     | Typ: BOOL
+Name: TAKTGENERATOR.A_FD_4000MS                                    | Typ: BOOL
+Name: TAKTGENERATOR.A_FD_500MS                                     | Typ: BOOL
+Name: TAKTGENERATOR.A_FD_8000MS                                    | Typ: BOOL
+Name: TAKTGENERATOR.FD_1000MS                                      | Typ: D_TRIG
+Name: TAKTGENERATOR.FD_125MS                                       | Typ: D_TRIG
+Name: TAKTGENERATOR.FD_16000MS                                     | Typ: D_TRIG
+Name: TAKTGENERATOR.FD_2000MS                                      | Typ: D_TRIG
+Name: TAKTGENERATOR.FD_250MS                                       | Typ: D_TRIG
+Name: TAKTGENERATOR.FD_4000MS                                      | Typ: D_TRIG
+Name: TAKTGENERATOR.FD_500MS                                       | Typ: D_TRIG
+Name: TAKTGENERATOR.FD_8000MS                                      | Typ: D_TRIG
+Name: TAKTGENERATOR.PULS                                           | Typ: TP
+Name: TAKTGENERATOR.TEILER                                         | Typ: CTU
+Name: TEST_AND_DEBUG.CRC                                           | Typ: BYTE
+Name: TEST_AND_DEBUG.F                                             | Typ: BOOL
+Name: TEST_AND_DEBUG.FN_TRIGGER                                    | Typ: F_TRIG
+Name: TEST_AND_DEBUG.FN_TRIGGER2                                   | Typ: F_TRIG
+Name: TEST_AND_DEBUG.GESCHWINDIGKEIT                               | Typ: DINT
+Name: TEST_AND_DEBUG.GETCPUUSAGE                                   | Typ: TC_CPUUSAGE
+Name: TEST_AND_DEBUG.L_FAHRZEIT                                    | Typ: TIME
+Name: TEST_AND_DEBUG.L_SSEND                                       | Typ: STRING(255)
+Name: TEST_AND_DEBUG.MAXUSAGE                                      | Typ: UDINT
+Name: TEST_AND_DEBUG.MEDIAN                                        | Typ: FB_MEDIAN_BERECHNUNG
+Name: TEST_AND_DEBUG.MEDIAN2                                       | Typ: FB_MEDIAN_BERECHNUNG
+Name: TEST_AND_DEBUG.POS_AUFAB                                     | Typ: LREAL
+Name: TEST_AND_DEBUG.POS_OBEN                                      | Typ: LREAL
+Name: TEST_AND_DEBUG.POS_UNTEN                                     | Typ: LREAL
+Name: TEST_AND_DEBUG.SOLLGESCHWINDIGKEIT                           | Typ: DINT
+Name: TEST_AND_DEBUG.STARTSTOPPV                                   | Typ: DINT
+Name: TEST_AND_DEBUG.START_TEST                                    | Typ: BOOL
+Name: TEST_AND_DEBUG.STEP                                          | Typ: INT16
+Name: TEST_AND_DEBUG.TEST1                                         | Typ: BOOL
+Name: TEST_AND_DEBUG.TEST_TOF                                      | Typ: TOF
+Name: TEST_AND_DEBUG.TON_ADD                                       | Typ: TON
+Name: TEST_AND_DEBUG.TON_FAHRZEIT                                  | Typ: TON
+Name: TEST_AND_DEBUG.TON_FREIFAHREN                                | Typ: TON
+Name: TEST_AND_DEBUG.TON_STOPP                                     | Typ: TON
+Name: TEST_AND_DEBUG.TON_WARTEN                                    | Typ: TON
+Name: TEST_AND_DEBUG.WARTEN                                        | Typ: INT16
+Name: VERSION.A_VERSION                                            | Typ: STRING(30)
+Name: VISU_CHARTS.FN_SHIFT                                         | Typ: F_TRIG
+Name: VISU_CHARTS.I                                                | Typ: INT16
+Name: VISU_CHARTS.SHIFT                                            | Typ: TP
+Name: WARNUNGENSAMMLER.A_WARNUNG                                   | Typ: BOOL
+Name: WARNUNGENSAMMLER.A_WARNUNGSNUMMER                            | Typ: EL_WARNINGCODE

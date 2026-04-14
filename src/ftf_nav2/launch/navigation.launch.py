@@ -100,16 +100,24 @@ def generate_launch_description():
 
        # BT Navigator
         Node(
-            package='nav2_bt_navigator',
+         package='nav2_bt_navigator',
             executable='bt_navigator',
             name='bt_navigator',
             output='screen',
             parameters=[params_file, {
                 'use_sim_time': use_sim_time,
-                # Wir erzwingen hier die Datei für EINZELNE Ziele (To Pose), 
-                # da "Through Poses" in Humble diesen Bug hat.
-                'default_bt_xml_filename': 'navigate_to_pose_w_replanning_and_recovery.xml'
+                # WIR ERZWINGEN DIE FUNKTIONIERENDE DATEI FÜR ALLES:
+                'default_bt_xml_filename': os.path.join(
+                    get_package_share_directory('nav2_bt_navigator'),
+                    'behavior_trees', 'navigate_to_pose_w_replanning_and_recovery.xml'),
+                'default_nav_to_pose_bt_xml': os.path.join(
+                    get_package_share_directory('nav2_bt_navigator'),
+                    'behavior_trees', 'navigate_to_pose_w_replanning_and_recovery.xml'),
+                'default_nav_through_poses_bt_xml': os.path.join(
+                    get_package_share_directory('nav2_bt_navigator'),
+                    'behavior_trees', 'navigate_to_pose_w_replanning_and_recovery.xml')
             }]
+        
         ),
         # Waypoint Follower
         Node(
@@ -120,6 +128,15 @@ def generate_launch_description():
             parameters=[params_file, {'use_sim_time': use_sim_time}]
         ),
 
+       # NEU: Docking Server (Damit der Prozess überhaupt startet)
+        Node(
+            package='opennav_docking',
+            executable='opennav_docking',
+            name='docking_server',
+            output='screen',
+            parameters=[params_file, {'use_sim_time': use_sim_time}],
+            remappings=[('cmd_vel', 'cmd_vel_nav')] # <--- HIER UMBIEGEN
+        ),
         # EINER für alles: Lifecycle Manager
         Node(
             package='nav2_lifecycle_manager',
