@@ -11,7 +11,7 @@ def generate_launch_description():
     pkg_ftf_nav2 = get_package_share_directory('ftf_nav2')
 
     default_params_file = os.path.join(pkg_ftf_nav2, 'config', 'nav2_params.yaml')
-    default_map_path = os.path.join(pkg_ftf_nav2, 'maps', 'CIMTT_komplett.yaml')
+    default_map_path = os.path.join(pkg_ftf_nav2, 'maps', 'CIMTT_komplett1.yaml')
 
     use_sim_time = LaunchConfiguration('use_sim_time')
     autostart = LaunchConfiguration('autostart')

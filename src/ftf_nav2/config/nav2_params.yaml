@@ -22,8 +22,8 @@ amcl:
     laser_max_range: 29.5
     laser_min_range: 0.05
     laser_likelihood_max_dist: 2.0
-    max_beams: 80
-    update_min_a: 0.15
+    max_beams: 60
+    update_min_a: 0.20
     update_min_d: 0.10
     z_hit: 0.7
     z_short: 0.05
@@ -84,62 +84,62 @@ bt_navigator:
 controller_server:
   ros__parameters:
     use_sim_time: false
-    controller_frequency: 15.0
+    controller_frequency: 20.0
     min_x_velocity_threshold: 0.001
     min_y_velocity_threshold: 0.001
     min_theta_velocity_threshold: 0.001
-    failure_tolerance: 0.3
+    failure_tolerance: 0.5
     publish_zero_velocity: true
     progress_checker_plugins: ["progress_checker"]
     goal_checker_plugins: ["goal_checker"]
     controller_plugins: ["FollowPath"]
     progress_checker:
       plugin: "nav2_controller::SimpleProgressChecker"
-      required_movement_radius: 0.1
-      movement_time_allowance: 8.0
+      required_movement_radius: 0.12
+      movement_time_allowance: 10.0
     goal_checker:
       plugin: "nav2_controller::SimpleGoalChecker"
       stateful: true
-      xy_goal_tolerance: 0.2
-      yaw_goal_tolerance: 0.25
+      xy_goal_tolerance: 0.08
+      yaw_goal_tolerance: 0.10
     FollowPath:
       plugin: "dwb_core::DWBLocalPlanner"
-      debug_trajectory_details: false
+      debug_trajectory_details: true
       min_vel_x: 0.0
       min_vel_y: 0.0
-      max_vel_x: 0.20
+      max_vel_x: 0.40
       max_vel_y: 0.0
-      max_vel_theta: 0.5
+      max_vel_theta: 0.35
       min_speed_xy: 0.0
       max_speed_xy: 0.20
-      min_speed_theta: 0.0
-      acc_lim_x: 0.4
+      min_speed_theta: 0.08
+      acc_lim_x: 0.6
       acc_lim_y: 0.0
-      acc_lim_theta: 0.8
-      decel_lim_x: -0.2
+      acc_lim_theta: 1.3
+      decel_lim_x: -0.25
       decel_lim_y: 0.0
-      decel_lim_theta: -0.4
+      decel_lim_theta: -0.6
       vx_samples: 15
       vy_samples: 1
-      vtheta_samples: 30
-      sim_time: 1.7
+      vtheta_samples: 24
+      sim_time: 1.8
       linear_granularity: 0.05
-      angular_granularity: 0.05
-      transform_tolerance: 0.3
+      angular_granularity: 0.04
+      xy_goal_tolerance: 0.08
+      trans_stopped_velocity: 0.05
       short_circuit_trajectory_evaluation: true
       stateful: true
-      critics: ["RotateToGoal", "Oscillation", "BaseObstacle", "PathAlign", "GoalAlign", "PathDist", "GoalDist"]
-      BaseObstacle.scale: 0.05
-      PathAlign.scale: 20.0
-      PathAlign.forward_point_distance: 0.2
-      GoalAlign.scale: 12.0
-      GoalAlign.forward_point_distance: 0.2
-      PathDist.scale: 32.0
-      GoalDist.scale: 20.0
-      RotateToGoal.scale: 24.0
+      critics: ["RotateToGoal", "Oscillation", "BaseObstacle", "GoalAlign", "PathAlign", "PathDist", "GoalDist"]
+      BaseObstacle.scale: 25.0
+      PathAlign.scale: 6.0
+      GoalAlign.scale: 5.0
+      PathAlign.forward_point_distance: 0.35
+      GoalAlign.forward_point_distance: 0.35
+      PathDist.scale: 16.0
+      GoalDist.scale: 12.0
+      RotateToGoal.scale: 25.0
       RotateToGoal.slowing_factor: 5.0
       RotateToGoal.lookahead_time: -1.0
-      Oscillation.scale: 18.0
 
 local_costmap:
   local_costmap:
@@ -147,37 +147,38 @@ local_costmap:
       use_sim_time: false
       global_frame: odom
       robot_base_frame: base_footprint
-      update_frequency: 8.0
-      publish_frequency: 4.0
+      update_frequency: 12.0
+      publish_frequency: 6.0
       rolling_window: true
       width: 4
       height: 4
       resolution: 0.05
       transform_tolerance: 0.3
-      footprint: "[ [0.415, 0.315], [0.415, -0.315], [-0.415, -0.315], [-0.415, 0.315] ]"
-      footprint_padding: 0.01
+      footprint: "[ [0.415, 0.35], [0.415, -0.35], [-0.415, -0.35], [-0.415, 0.35] ]"
+      footprint_padding: 0.02
       plugins: ["obstacle_layer", "inflation_layer"]
       always_send_full_costmap: true
-
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: true
+        footprint_clearing_enabled: true
         observation_sources: scan
         scan:
           topic: /scan/filtered
           data_type: "LaserScan"
           clearing: true
           marking: true
-          obstacle_max_range: 2.5
+          inf_is_valid: true
+          observation_persistence: 0.0
+          obstacle_max_range: 3.0
           obstacle_min_range: 0.05
-          raytrace_max_range: 3.0
+          raytrace_max_range: 3.2
           raytrace_min_range: 0.05
           max_obstacle_height: 2.0
-
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 6.0
-        inflation_radius: 0.60
+        cost_scaling_factor: 3.0
+        inflation_radius: 0.45
 
 global_costmap:
   global_costmap:
@@ -190,34 +191,17 @@ global_costmap:
       resolution: 0.05
       transform_tolerance: 0.3
       track_unknown_space: true
-      footprint: "[ [0.415, 0.315], [0.415, -0.315], [-0.415, -0.315], [-0.415, 0.315] ]"
+      footprint: "[ [0.415, 0.35], [0.415, -0.35], [-0.415, -0.35], [-0.415, 0.35] ]"
       footprint_padding: 0.03
-      plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
+      plugins: ["static_layer", "inflation_layer"]
       always_send_full_costmap: true
-
       static_layer:
         plugin: "nav2_costmap_2d::StaticLayer"
         map_subscribe_transient_local: true
-
-      obstacle_layer:
-        plugin: "nav2_costmap_2d::ObstacleLayer"
-        enabled: true
-        observation_sources: scan
-        scan:
-          topic: /scan/filtered
-          data_type: "LaserScan"
-          clearing: true
-          marking: true
-          obstacle_max_range: 4.0
-          obstacle_min_range: 0.05
-          raytrace_max_range: 5.0
-          raytrace_min_range: 0.05
-          max_obstacle_height: 2.0
-
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 4.0
-        inflation_radius: 0.50
+        cost_scaling_factor: 8.0
+        inflation_radius: 0.40
 
 planner_server:
   ros__parameters:
@@ -226,8 +210,8 @@ planner_server:
     planner_plugins: ["GridBased"]
     GridBased:
       plugin: "nav2_navfn_planner/NavfnPlanner"
-      tolerance: 0.5
-      use_astar: false
+      tolerance: 0.2
+      use_astar: true
       allow_unknown: true
 
 behavior_server:
@@ -252,14 +236,14 @@ behavior_server:
     robot_base_frame: base_footprint
     transform_tolerance: 0.3
     simulate_ahead_time: 2.0
-    max_rotational_vel: 0.8
+    max_rotational_vel: 0.6
     min_rotational_vel: 0.2
-    rotational_acc_lim: 1.0
+    rotational_acc_lim: 0.8
 
 map_server:
   ros__parameters:
     use_sim_time: false
-    yaml_filename: "/home/ftf2/fh_ws/src/ftf_nav2/maps/CIMTT_komplett.yaml"
+    yaml_filename: "/home/ftf2/fh_ws/src/ftf_nav2/maps/CIMTT_komplett1.yaml"
 
 waypoint_follower:
   ros__parameters:
@@ -281,59 +265,97 @@ lifecycle_manager_service:
 
 dock_laden_node:
   ros__parameters:
-    # ---------- Mission ----------
     transfer_height_mm: 480.0
     height_tolerance_mm: 5.0
     prepare_timeout_s: 30.0
     load_timeout_s: 12.0
-
-    # ---------- Nav2 Staging ----------
     use_nav2_staging: true
     nav_goal_timeout_s: 180.0
     staging_frame: "map"
-
-    # Gemessene brauchbare Vorposition vor der Station
-    # aus map -> base_footprint:
-    # x=7.620, y=2.008, yaw=29.0 deg
-    staging_x: 7.620
-    staging_y: 2.008
-    staging_yaw_deg: 29.0
-
-    # ---------- V-Docking ----------
-    target_dist_m: 0.65
-    dock_tolerance_m: 0.03
-    max_linear_speed: 0.06
-    slow_linear_speed: 0.02
-    angular_gain: 0.8
-    linear_gain: 0.25
-    dock_result_timeout_s: 90.0
-
-    # V-Flanken-Sektoren
-    left_sector_min_deg: -35.0
-    left_sector_max_deg: -10.0
-    right_sector_min_deg: 10.0
-    right_sector_max_deg: 35.0
-
-    # Spitze / Mitte
-    center_sector_min_deg: -8.0
-    center_sector_max_deg: 8.0
-
-    # ---------- Rückwärts raus ----------
-    reverse_undock_speed: -0.08
-    reverse_undock_time_s: 4.0
-
-    # ---------- Topics ----------
+    staging_x: -0.801
+    staging_y: -1.322
+    staging_yaw_deg: -99.6
+    target_dist_m: 0.0
+    dock_tolerance_m: 0.02
+    max_linear_speed: 0.05
+    slow_linear_speed: 0.025
+    angular_gain: 1.20
+    linear_gain: 0.30
+    dock_result_timeout_s: 120.0
+    left_sector_min_deg: -30.0
+    left_sector_max_deg: -8.0
+    right_sector_min_deg: 8.0
+    right_sector_max_deg: 30.0
+    center_sector_min_deg: -6.0
+    center_sector_max_deg: 6.0
+    final_stop_dist_m: 0.05
+    apex_align_tolerance: 0.04
+    side_align_tolerance: 0.03
+    reverse_undock_speed: -0.20
+    reverse_undock_time_s: 6.0
     scan_topic: "/scan/filtered"
     cmd_vel_docking_topic: "/cmd_vel_docking"
+    hub_target_topic: "/ftf/hub/target_height"
+    hub_height_topic: "/ftf/hub/height"
+    hub_ready_topic: "/ftf/hub/ready"
+    conveyor_cmd_topic: "/ftf/conveyor/cmd"
+    mission_start_topic: "/ftf/start_load"
+    mission_busy_topic: "/ftf/mission/busy"
+    mission_state_topic: "/ftf/mission/state"
+    vertex_debug_topic: "/v_vertex_ue"
 
+unload_wait_node:
+  ros__parameters:
+    use_nav2_to_unload: true
+    nav_goal_timeout_s: 180.0
+    unload_frame: "map"
+    unload_x: -17.633
+    unload_y: 2.706
+    unload_yaw_deg: 81.318
+    unload_height_mm: 700.0
+    lower_height_mm: 420.0
+    hub_height_tolerance_mm: 10.0
+    hub_raise_timeout_s: 30.0
+    hub_lower_timeout_s: 30.0
+    wait_for_manual_release: true
+    start_unload_topic: "/ftf/start_unload"
+    continue_topic: "/ftf/continue_after_unload"
+    mission_busy_topic: "/ftf/mission/busy"
+    mission_state_topic: "/ftf/mission/state"
     hub_target_topic: "/ftf/hub/target_height"
     hub_height_topic: "/ftf/hub/height"
     hub_ready_topic: "/ftf/hub/ready"
 
-    conveyor_cmd_topic: "/ftf/conveyor/cmd"
-
-    mission_start_topic: "/ftf/start_mission"
+unload_return_node:
+  ros__parameters:
+    use_nav2: true
+    nav_goal_timeout_s: 180.0
+    start_unload_topic: "/ftf/start_unload"
+    auto_restart_load_cycle: true
+    restart_delay_s: 1.0
+    start_load_topic: "/ftf/start_mission"
+    unload_frame: "map"
+    unload_x: -17.633
+    unload_y: 2.706
+    unload_yaw_deg: 81.318
+    load_frame: "map"
+    load_x: -0.801
+    load_y: -1.322
+    load_yaw_deg: -99.6
+    unload_height_mm: 700.0
+    hub_height_tolerance_mm: 15.0
+    hub_raise_timeout_s: 40.0
+    reset_wait_min_s: 2.0
+    ready_wait_timeout_s: 40.0
+    ready_height_max_mm: 450.0
+    sensor2_must_be_true_before_waiting_false: true
+    sensor_false_debounce_s: 1.0
+    sensor2_present_timeout_s: 30.0
+    sensor2_removed_timeout_s: 600.0
     mission_busy_topic: "/ftf/mission/busy"
     mission_state_topic: "/ftf/mission/state"
-
-    vertex_debug_topic: "/v_vertex_ue"
+    hub_target_topic: "/ftf/hub/target_height"
+    hub_height_topic: "/ftf/hub/height"
+    hub_ready_topic: "/ftf/hub/ready"
+    conveyor_cmd_topic: "/ftf/conveyor/cmd"
+    sensor2_topic: "/ftf/lam/sensor2"
